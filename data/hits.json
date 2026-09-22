@@ -1,76 +1,673 @@
 {
   "_comment": "Curated 'top hits' shown on each product. 'products' is keyed by 'season|line' and wins over the generic 'lines' + 'seasons' fallback. Edit freely — the site rebuilds from this file.",
-
   "products": {
     "2026-27|Series 1": {
-      "young_guns": ["Porter Martone (PHI)", "James Hagens (BOS)", "Carter Yakemchuk (OTT)", "David Reinbacher (MTL)"],
+      "young_guns": [
+        "Porter Martone (PHI)",
+        "James Hagens (BOS)",
+        "Carter Yakemchuk (OTT)",
+        "David Reinbacher (MTL)"
+      ],
       "note": "Releases Oct 7, 2026. Names are anticipated rookies, not a final checklist."
     },
     "2025-26|Series 1": {
-      "young_guns": ["Ivan Demidov (MTL)", "Ryan Leonard (WSH)", "Gabe Perreault (NYR)", "Jimmy Snuggerud (STL)", "Artyom Levshunov (CHI)"],
-      "chase": ["#250 Young Guns Checklist – Demidov / Levshunov"]
+      "young_guns": [
+        "Ivan Demidov (MTL)",
+        "Ryan Leonard (WSH)",
+        "Gabe Perreault (NYR)",
+        "Jimmy Snuggerud (STL)",
+        "Artyom Levshunov (CHI)"
+      ],
+      "chase": [
+        "#250 Young Guns Checklist – Demidov / Levshunov"
+      ]
     },
     "2025-26|Series 2": {
-      "young_guns": ["Matthew Schaefer (NYI)", "Michael Misa (SJ)", "Easton Cowan (TOR)", "Zeev Buium (MIN)", "Sam Dickinson (SJ)", "Ben Kindel (PIT)", "Isaac Howard (EDM)", "Danila Yurov (MIN)"],
-      "chase": ["Ivan Demidov UD Canvas Young Guns"]
+      "young_guns": [
+        "Matthew Schaefer (NYI)",
+        "Michael Misa (SJ)",
+        "Easton Cowan (TOR)",
+        "Zeev Buium (MIN)",
+        "Sam Dickinson (SJ)",
+        "Ben Kindel (PIT)",
+        "Isaac Howard (EDM)",
+        "Danila Yurov (MIN)"
+      ],
+      "chase": [
+        "Ivan Demidov UD Canvas Young Guns"
+      ]
     },
     "2025-26|Extended Series": {
-      "young_guns": ["Young Guns / 1st Round Rookies from the 2025-26 class"],
-      "chase": ["NHL Debut Game Jersey cards (new)", "HoloGrFX insert (new)"],
+      "young_guns": [
+        "Young Guns / 1st Round Rookies from the 2025-26 class"
+      ],
+      "chase": [
+        "NHL Debut Game Jersey cards (new)",
+        "HoloGrFX insert (new)"
+      ],
       "note": "Headline names across the 2025-26 class: Schaefer, Misa, Sennecke, Demidov, Leonard, Cowan, Parekh. Confirm the Extended checklist before buying for one player."
     },
     "2024-25|Series 1": {
-      "young_guns": ["Lane Hutson (MTL)", "Cutter Gauthier (ANA)", "Logan Stankoven (DAL)", "Jesper Wallstedt (MIN)", "Matt Rempe (NYR)", "Josh Doan (UTA)", "Mavrik Bourque (DAL)"]
+      "young_guns": [
+        "Lane Hutson (MTL)",
+        "Cutter Gauthier (ANA)",
+        "Logan Stankoven (DAL)",
+        "Jesper Wallstedt (MIN)",
+        "Matt Rempe (NYR)",
+        "Josh Doan (UTA)",
+        "Mavrik Bourque (DAL)"
+      ]
     },
     "2024-25|Series 2": {
-      "young_guns": ["Macklin Celebrini (SJ)", "Matvei Michkov (PHI)"],
-      "chase": ["#500 Young Guns Checklist – Celebrini / Michkov"]
+      "young_guns": [
+        "Macklin Celebrini (SJ)",
+        "Matvei Michkov (PHI)"
+      ],
+      "chase": [
+        "#500 Young Guns Checklist – Celebrini / Michkov"
+      ]
     },
     "2024-25|Extended Series": {
-      "young_guns": ["Will Smith (SJ)", "Jonathan Lekkerimaki (VAN)"]
+      "young_guns": [
+        "Will Smith (SJ)",
+        "Jonathan Lekkerimaki (VAN)"
+      ]
     },
     "2023-24|Series 1": {
-      "young_guns": ["Luke Hughes (NJ)", "Matthew Knies (TOR)"],
-      "chase": ["#250 Young Guns Checklist – Hughes / Knies"]
+      "young_guns": [
+        "Luke Hughes (NJ)",
+        "Matthew Knies (TOR)"
+      ],
+      "chase": [
+        "#250 Young Guns Checklist – Hughes / Knies"
+      ]
     },
     "2023-24|Series 2": {
-      "young_guns": ["Connor Bedard (CHI)", "Leo Carlsson (ANA)"],
-      "chase": ["#500 Young Guns Checklist – Bedard / Carlsson"]
+      "young_guns": [
+        "Connor Bedard (CHI)",
+        "Leo Carlsson (ANA)"
+      ],
+      "chase": [
+        "#500 Young Guns Checklist – Bedard / Carlsson"
+      ]
     },
     "2023-24|Extended Series": {
-      "young_guns": ["Adam Fantilli (CBJ)"]
+      "young_guns": [
+        "Adam Fantilli (CBJ)"
+      ]
+    },
+    "2022-23|Series 1": {
+      "young_guns": [
+        "Owen Power (BUF)",
+        "Matt Boldy (MIN)",
+        "Marco Rossi (MIN)",
+        "Kent Johnson (CBJ)",
+        "Jack Quinn (BUF)",
+        "Pyotr Kochetkov (CAR)"
+      ],
+      "chase": [
+        "#250 Young Guns Checklist – Boldy / Rossi"
+      ]
+    },
+    "2022-23|Series 2": {
+      "young_guns": [
+        "Juraj Slafkovsky (MTL)",
+        "Shane Wright (SEA)",
+        "Dylan Guenther (ARI)",
+        "Jake Sanderson (OTT)",
+        "Andrei Kuzmenko (VAN)",
+        "Dylan Holloway (EDM)"
+      ],
+      "chase": [
+        "#500 Young Guns Checklist – Slafkovsky / Wright"
+      ]
+    },
+    "2022-23|Extended Series": {
+      "young_guns": [
+        "Kirill Marchenko (CBJ)",
+        "Aatu Raty (NYI)",
+        "Jonatan Berggren (DET)",
+        "Pontus Holmberg (TOR)"
+      ]
+    },
+    "2021-22|Series 1": {
+      "young_guns": [
+        "Cole Caufield (MTL)",
+        "Trevor Zegras (ANA)",
+        "Jeremy Swayman (BOS)",
+        "Spencer Knight (FLA)",
+        "Cam York (PHI)"
+      ]
+    },
+    "2021-22|Series 2": {
+      "young_guns": [
+        "Moritz Seider (DET)",
+        "Lucas Raymond (DET)",
+        "Mason McTavish (ANA)",
+        "Quinton Byfield (LA)",
+        "Dawson Mercer (NJ)",
+        "William Eklund (SJ)"
+      ]
+    },
+    "2021-22|Extended Series": {
+      "young_guns": [
+        "Seth Jarvis (CAR)",
+        "Alexander Holtz (NJ)",
+        "JJ Peterka (BUF)",
+        "Vasily Podkolzin (VAN)"
+      ]
+    },
+    "2020-21|Series 1": {
+      "young_guns": [
+        "Alexis Lafreniere (NYR)",
+        "Jason Robertson (DAL)",
+        "Gabe Vilardi (LA)",
+        "Philip Broberg (EDM)"
+      ]
+    },
+    "2020-21|Series 2": {
+      "young_guns": [
+        "Kirill Kaprizov (MIN)",
+        "Tim Stutzle (OTT)",
+        "Ilya Sorokin (NYI)",
+        "Alexander Romanov (MTL)"
+      ]
+    },
+    "2020-21|Extended Series": {
+      "young_guns": [
+        "Arthur Kaliyev (LA)",
+        "Jack Rathbone (VAN)",
+        "Joel Hofer (STL)"
+      ]
+    },
+    "2019-20|Series 1": {
+      "young_guns": [
+        "Jack Hughes (NJ)",
+        "Quinn Hughes (VAN)",
+        "Victor Olofsson (BUF)"
+      ]
+    },
+    "2019-20|Series 2": {
+      "young_guns": [
+        "Cale Makar (COL)",
+        "Kaapo Kakko (NYR)",
+        "Nick Suzuki (MTL)",
+        "Kirby Dach (CHI)",
+        "Filip Zadina (DET)"
+      ]
+    },
+    "2018-19|Series 1": {
+      "young_guns": [
+        "Elias Pettersson (VAN)",
+        "Rasmus Dahlin (BUF)",
+        "Miro Heiskanen (DAL)",
+        "Jesperi Kotkaniemi (MTL)"
+      ]
+    },
+    "2018-19|Series 2": {
+      "young_guns": [
+        "Andrei Svechnikov (CAR)",
+        "Brady Tkachuk (OTT)",
+        "Carter Hart (PHI)",
+        "Robert Thomas (STL)",
+        "Ilya Samsonov (WSH)"
+      ]
+    },
+    "2017-18|Series 1": {
+      "young_guns": [
+        "Brock Boeser (VAN)",
+        "Nico Hischier (NJ)",
+        "Charlie McAvoy (BOS)",
+        "Alex DeBrincat (CHI)",
+        "Jake DeBrusk (BOS)"
+      ]
+    },
+    "2017-18|Series 2": {
+      "young_guns": [
+        "Clayton Keller (ARI)",
+        "Nolan Patrick (PHI)",
+        "Jesper Bratt (NJ)",
+        "Samuel Girard (COL)"
+      ]
+    },
+    "2016-17|Series 1": {
+      "young_guns": [
+        "Auston Matthews (TOR)",
+        "William Nylander (TOR)",
+        "Sebastian Aho (CAR)",
+        "Zach Werenski (CBJ)",
+        "Jesse Puljujarvi (EDM)"
+      ],
+      "chase": [
+        "#250 Young Guns Checklist – Matthews / Nylander"
+      ]
+    },
+    "2016-17|Series 2": {
+      "young_guns": [
+        "Patrik Laine (WPG)",
+        "Mitch Marner (TOR)",
+        "Mathew Barzal (NYI)",
+        "Timo Meier (SJ)",
+        "Thomas Chabot (OTT)"
+      ]
+    },
+    "2015-16|Series 1": {
+      "young_guns": [
+        "Connor McDavid (EDM)",
+        "Jack Eichel (BUF)",
+        "Artemi Panarin (CHI)",
+        "Mikko Rantanen (COL)",
+        "Dylan Larkin (DET)",
+        "Connor Hellebuyck (WPG)"
+      ]
+    },
+    "2015-16|Series 2": {
+      "young_guns": [
+        "Juuse Saros (NSH)",
+        "Jaccob Slavin (CAR)",
+        "Shea Theodore (ANA)",
+        "Linus Ullmark (BUF)"
+      ],
+      "chase": [
+        "Connor McDavid UD Canvas Young Guns (Series 2 only)"
+      ]
+    },
+    "2014-15|Series 1": {
+      "young_guns": [
+        "Leon Draisaitl (EDM)",
+        "Johnny Gaudreau (CGY)",
+        "Aaron Ekblad (FLA)",
+        "Sam Reinhart (BUF)"
+      ]
+    },
+    "2014-15|Series 2": {
+      "young_guns": [
+        "Andrei Vasilevskiy (TB)",
+        "David Pastrnak (BOS)",
+        "Bo Horvat (VAN)"
+      ]
+    },
+    "2013-14|Series 1": {
+      "young_guns": [
+        "Nathan MacKinnon (COL)",
+        "Vladimir Tarasenko (STL)",
+        "Jonathan Huberdeau (FLA)"
+      ]
+    },
+    "2013-14|Series 2": {
+      "young_guns": [
+        "Nikita Kucherov (TB)",
+        "Aleksander Barkov (FLA)",
+        "Filip Forsberg (NSH)",
+        "John Gibson (ANA)"
+      ]
+    },
+    "2012-13|Series 1": {
+      "young_guns": [
+        "Chris Kreider (NYR)",
+        "Jaden Schwartz (STL)",
+        "Jakob Silfverberg (OTT)"
+      ],
+      "note": "Lockout year: no 2012 draft picks (Yakupov, Galchenyuk) in this set."
+    },
+    "2011-12|Series 1": {
+      "young_guns": [
+        "Ryan Nugent-Hopkins (EDM)",
+        "Gabriel Landeskog (COL)",
+        "Sean Couturier (PHI)",
+        "Adam Larsson (NJ)"
+      ]
+    },
+    "2011-12|Series 2": {
+      "young_guns": [
+        "Adam Henrique (NJ)",
+        "Gustav Nyquist (DET)",
+        "Zack Kassian (BUF)",
+        "Brendan Smith (DET)"
+      ]
+    },
+    "2010-11|Series 1": {
+      "young_guns": [
+        "Taylor Hall (EDM)",
+        "Jordan Eberle (EDM)",
+        "P.K. Subban (MTL)"
+      ]
+    },
+    "2010-11|Series 2": {
+      "young_guns": [
+        "Tyler Seguin (BOS)"
+      ]
+    },
+    "2009-10|Series 1": {
+      "young_guns": [
+        "John Tavares (NYI)",
+        "Victor Hedman (TB)",
+        "Matt Duchene (COL)",
+        "Tyler Myers (BUF)"
+      ],
+      "chase": [
+        "#250 Young Guns Checklist – Tavares / Hedman / Duchene"
+      ]
+    },
+    "2009-10|Series 2": {
+      "young_guns": [
+        "Logan Couture (SJ)",
+        "Brad Marchand (BOS)",
+        "Tyler Ennis (BUF)",
+        "James Reimer (TOR)"
+      ]
+    },
+    "2008-09|Series 1": {
+      "young_guns": [
+        "Steven Stamkos (TB)",
+        "Drew Doughty (LA)",
+        "Claude Giroux (PHI)",
+        "Luke Schenn (TOR)"
+      ]
+    },
+    "2008-09|Series 2": {
+      "young_guns": [
+        "Ben Bishop (STL)",
+        "Cory Schneider (VAN)"
+      ]
+    },
+    "2007-08|Series 1": {
+      "young_guns": [
+        "Patrick Kane (CHI)",
+        "Carey Price (MTL)",
+        "Erik Johnson (STL)"
+      ],
+      "chase": [
+        "#250 Young Guns Checklist – Kane / Price / Johnson"
+      ]
+    },
+    "2007-08|Series 2": {
+      "young_guns": [
+        "Jonathan Toews (CHI)"
+      ]
+    },
+    "2006-07|Series 1": {
+      "young_guns": [
+        "Phil Kessel (BOS)",
+        "Paul Stastny (COL)",
+        "Jordan Staal (PIT)"
+      ]
+    },
+    "2006-07|Series 2": {
+      "young_guns": [
+        "Evgeni Malkin (PIT)"
+      ]
+    },
+    "2005-06|Series 1": {
+      "young_guns": [
+        "Sidney Crosby (PIT)"
+      ]
+    },
+    "2005-06|Series 2": {
+      "young_guns": [
+        "Alex Ovechkin (WSH)"
+      ]
+    },
+    "2003-04|Series 1": {
+      "young_guns": [
+        "Marc-Andre Fleury (PIT)",
+        "Eric Staal (CAR)",
+        "Patrice Bergeron (BOS)"
+      ]
+    },
+    "2003-04|Series 2": {
+      "young_guns": [],
+      "note": "This season's headline Young Guns (Fleury, Eric Staal, Bergeron) are all in Series 1, not Series 2."
+    },
+    "2002-03|Series 1": {
+      "young_guns": [
+        "Rick Nash (CBJ)",
+        "Henrik Zetterberg (DET)",
+        "Jay Bouwmeester (FLA)"
+      ]
+    },
+    "2002-03|Series 2": {
+      "young_guns": [],
+      "note": "This season's headline Young Guns (Rick Nash, Zetterberg) are in Series 1, not Series 2."
     }
   },
-
   "seasons": {
-    "2026-27": ["Porter Martone", "James Hagens", "Carter Yakemchuk", "David Reinbacher"],
-    "2025-26": ["Matthew Schaefer", "Ivan Demidov", "Michael Misa", "Beckett Sennecke", "Ryan Leonard", "Zayne Parekh", "Easton Cowan", "Zeev Buium"],
-    "2024-25": ["Macklin Celebrini", "Matvei Michkov", "Lane Hutson", "Cutter Gauthier", "Will Smith", "Logan Stankoven"],
-    "2023-24": ["Connor Bedard", "Adam Fantilli", "Leo Carlsson", "Luke Hughes", "Matthew Knies"],
-    "2022-23": ["Shane Wright", "Matty Beniers", "Owen Power", "Mason McTavish"]
+    "2026-27": [
+      "Porter Martone",
+      "James Hagens",
+      "Carter Yakemchuk",
+      "David Reinbacher"
+    ],
+    "2025-26": [
+      "Matthew Schaefer",
+      "Ivan Demidov",
+      "Michael Misa",
+      "Beckett Sennecke",
+      "Ryan Leonard",
+      "Zayne Parekh",
+      "Easton Cowan",
+      "Zeev Buium"
+    ],
+    "2024-25": [
+      "Macklin Celebrini",
+      "Matvei Michkov",
+      "Lane Hutson",
+      "Cutter Gauthier",
+      "Will Smith",
+      "Logan Stankoven"
+    ],
+    "2023-24": [
+      "Connor Bedard",
+      "Adam Fantilli",
+      "Leo Carlsson",
+      "Luke Hughes",
+      "Matthew Knies"
+    ],
+    "2022-23": [
+      "Juraj Slafkovsky",
+      "Shane Wright",
+      "Owen Power",
+      "Matt Boldy",
+      "Dylan Guenther",
+      "Jake Sanderson"
+    ],
+    "2021-22": [
+      "Cole Caufield",
+      "Trevor Zegras",
+      "Moritz Seider",
+      "Lucas Raymond",
+      "Mason McTavish",
+      "Jeremy Swayman"
+    ],
+    "2020-21": [
+      "Kirill Kaprizov",
+      "Alexis Lafreniere",
+      "Tim Stutzle",
+      "Jason Robertson",
+      "Ilya Sorokin"
+    ],
+    "2019-20": [
+      "Cale Makar",
+      "Jack Hughes",
+      "Quinn Hughes",
+      "Kaapo Kakko",
+      "Nick Suzuki"
+    ],
+    "2018-19": [
+      "Elias Pettersson",
+      "Rasmus Dahlin",
+      "Andrei Svechnikov",
+      "Brady Tkachuk",
+      "Miro Heiskanen"
+    ],
+    "2017-18": [
+      "Brock Boeser",
+      "Nico Hischier",
+      "Charlie McAvoy",
+      "Clayton Keller",
+      "Alex DeBrincat"
+    ],
+    "2016-17": [
+      "Auston Matthews",
+      "Patrik Laine",
+      "Mitch Marner",
+      "Mathew Barzal",
+      "William Nylander"
+    ],
+    "2015-16": [
+      "Connor McDavid",
+      "Jack Eichel",
+      "Artemi Panarin",
+      "Mikko Rantanen",
+      "Dylan Larkin"
+    ],
+    "2014-15": [
+      "Leon Draisaitl",
+      "Johnny Gaudreau",
+      "David Pastrnak",
+      "Andrei Vasilevskiy",
+      "Aaron Ekblad"
+    ],
+    "2013-14": [
+      "Nathan MacKinnon",
+      "Nikita Kucherov",
+      "Aleksander Barkov",
+      "Filip Forsberg",
+      "Vladimir Tarasenko"
+    ],
+    "2012-13": [
+      "Chris Kreider",
+      "Jaden Schwartz"
+    ],
+    "2011-12": [
+      "Ryan Nugent-Hopkins",
+      "Gabriel Landeskog",
+      "Sean Couturier",
+      "Adam Henrique"
+    ],
+    "2010-11": [
+      "Taylor Hall",
+      "Tyler Seguin",
+      "P.K. Subban",
+      "Jordan Eberle"
+    ],
+    "2009-10": [
+      "John Tavares",
+      "Victor Hedman",
+      "Matt Duchene",
+      "Logan Couture",
+      "Brad Marchand"
+    ],
+    "2008-09": [
+      "Steven Stamkos",
+      "Drew Doughty",
+      "Claude Giroux"
+    ],
+    "2007-08": [
+      "Patrick Kane",
+      "Jonathan Toews",
+      "Carey Price"
+    ],
+    "2006-07": [
+      "Evgeni Malkin",
+      "Phil Kessel",
+      "Jordan Staal",
+      "Paul Stastny"
+    ],
+    "2005-06": [
+      "Sidney Crosby",
+      "Alex Ovechkin"
+    ],
+    "2003-04": [
+      "Marc-Andre Fleury",
+      "Eric Staal",
+      "Patrice Bergeron"
+    ],
+    "2002-03": [
+      "Rick Nash",
+      "Henrik Zetterberg"
+    ]
   },
-
   "lines": {
-    "Series 1":            ["Young Guns (6 per hobby box)", "Young Guns Exclusives /100", "UD Canvas Young Guns"],
-    "Series 2":            ["Young Guns (6 per hobby box)", "Young Guns Exclusives /100", "UD Canvas Young Guns"],
-    "Extended Series":     ["Young Guns / 1st Round Rookies", "Young Guns Exclusives /100", "UD Canvas Young Guns"],
-    "O-Pee-Chee":          ["Marquee Rookies", "Retro & Black Border parallels"],
-    "O-Pee-Chee Platinum": ["Marquee Rookies", "Low-numbered colour parallels"],
-    "MVP":                 ["Rookie cards (short prints)", "Super Script parallels"],
-    "SP Authentic":        ["Future Watch Autograph rookies", "Limited Autographs", "Sign of the Times autos"],
-    "SP Game Used":        ["Rookie autograph / patch cards", "Tag autos"],
-    "SPx":                 ["Rookie Auto Jersey cards"],
-    "Ice":                 ["Ice Premieres rookies", "Premieres autographs"],
-    "Artifacts":           ["Rookie redemptions", "Rookie Materials autos"],
-    "The Cup":             ["Rookie Patch Autographs (RPA)", "Rookie Auto Patch parallels"],
-    "Trilogy":             ["Rookie Premieres autographs"],
-    "Black Diamond":       ["Rookie Gems", "Quad Diamond rookies"],
-    "Premier":             ["Rookie Autograph Patches"],
-    "Ultimate Collection": ["Rookie autograph patches"],
-    "Synergy":             ["Rookie cards & rookie parallels"],
-    "Allure":              ["Rookie colour parallels"],
-    "Parkhurst":           ["Parkhurst rookies"],
-    "Parkhurst Champions": ["Rookie autographs", "Legends autographs"],
-    "Tim Hortons":         ["Rookie & autograph inserts"]
+    "Series 1": [
+      "Young Guns (6 per hobby box)",
+      "Young Guns Exclusives /100",
+      "UD Canvas Young Guns"
+    ],
+    "Series 2": [
+      "Young Guns (6 per hobby box)",
+      "Young Guns Exclusives /100",
+      "UD Canvas Young Guns"
+    ],
+    "Extended Series": [
+      "Young Guns / 1st Round Rookies",
+      "Young Guns Exclusives /100",
+      "UD Canvas Young Guns"
+    ],
+    "O-Pee-Chee": [
+      "Marquee Rookies",
+      "Retro & Black Border parallels"
+    ],
+    "O-Pee-Chee Platinum": [
+      "Marquee Rookies",
+      "Low-numbered colour parallels"
+    ],
+    "MVP": [
+      "Rookie cards (short prints)",
+      "Super Script parallels"
+    ],
+    "SP Authentic": [
+      "Future Watch Autograph rookies",
+      "Limited Autographs",
+      "Sign of the Times autos"
+    ],
+    "SP Game Used": [
+      "Rookie autograph / patch cards",
+      "Tag autos"
+    ],
+    "SPx": [
+      "Rookie Auto Jersey cards"
+    ],
+    "Ice": [
+      "Ice Premieres rookies",
+      "Premieres autographs"
+    ],
+    "Artifacts": [
+      "Rookie redemptions",
+      "Rookie Materials autos"
+    ],
+    "The Cup": [
+      "Rookie Patch Autographs (RPA)",
+      "Rookie Auto Patch parallels"
+    ],
+    "Trilogy": [
+      "Rookie Premieres autographs"
+    ],
+    "Black Diamond": [
+      "Rookie Gems",
+      "Quad Diamond rookies"
+    ],
+    "Premier": [
+      "Rookie Autograph Patches"
+    ],
+    "Ultimate Collection": [
+      "Rookie autograph patches"
+    ],
+    "Synergy": [
+      "Rookie cards & rookie parallels"
+    ],
+    "Allure": [
+      "Rookie colour parallels"
+    ],
+    "Parkhurst": [
+      "Parkhurst rookies"
+    ],
+    "Parkhurst Champions": [
+      "Rookie autographs",
+      "Legends autographs"
+    ],
+    "Tim Hortons": [
+      "Rookie & autograph inserts"
+    ]
   }
 }

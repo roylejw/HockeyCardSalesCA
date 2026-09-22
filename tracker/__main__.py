@@ -5,7 +5,10 @@
     python3 -m tracker serve     # view the site at http://localhost:8000
     python3 -m tracker reclassify  # re-apply classify.py rules to stored listings
 """
+import html
 import json
+import re
+import shutil
 import statistics
 import sys
 from datetime import datetime, timedelta, timezone
@@ -19,6 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SALE_MIN_PCT = 5          # ignore discounts smaller than this
 BELOW_MARKET_PCT = 10     # flag listings this far under the median of other stores
 HISTORY_DAYS = 90
+SITE_URL = "https://hockeycardsales.app"
 
 
 def now():
@@ -71,7 +75,7 @@ def hits_for(hits, season, line):
     return {
         "young_guns": specific.get("young_guns", []),
         "chase": specific.get("chase", []) + hits["lines"].get(line, []),
-        "rookie_class": [] if specific.get("young_guns") else hits["seasons"].get(season, []),
+        "rookie_class": [] if specific else hits["seasons"].get(season, []),
         "note": specific.get("note"),
     }
 
@@ -136,18 +140,141 @@ def build():
             "on_sale": any(x["on_sale"] for x in listings),
             "max_sale_pct": max((x["sale_pct"] for x in listings if x["on_sale"]), default=0),
             "hits": hits_for(hits, season, line),
+            "slug": slugify(f"{season} upper deck {line} {box_type} box"),
         })
     out.sort(key=lambda p: (p["season"], p["line"]), reverse=True)
 
     data = {"generated": now(), "products": out, "runs": runs}
     site = ROOT / "site"
-    site.mkdir(exist_ok=True)
+    if site.exists():
+        shutil.rmtree(site)
+    site.mkdir()
+    shutil.copy(ROOT / "web" / "style.css", site / "style.css")
     (site / "data.json").write_text(json.dumps(data))
-    html = (ROOT / "web" / "template.html").read_text()
+    page = (ROOT / "web" / "template.html").read_text()
     payload = json.dumps(data).replace("</", "<\\/")
-    (site / "index.html").write_text(html.replace("/*__DATA__*/null", payload))
+    page = page.replace("/*__DATA__*/null", payload).replace("<!--__BROWSE__-->", browse_html(out))
+    (site / "index.html").write_text(page)
+    write_product_pages(site, out, data["generated"])
+    write_sitemap(site, out, data["generated"])
     print(f"Built site/index.html — {len(out)} products, "
           f"{sum(p['on_sale'] for p in out)} with sales")
+
+
+def slugify(text):
+    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+
+
+def money(n):
+    return f"${n:,.2f}" if n is not None else "—"
+
+
+def browse_html(products):
+    """Plain links to every product page, grouped by season, so search engines can crawl them."""
+    by_season = {}
+    for p in products:
+        by_season.setdefault(p["season"], []).append(p)
+    parts = []
+    for season in sorted(by_season, reverse=True):
+        items = "".join(
+            f'<li><a href="/boxes/{p["slug"]}/">{html.escape(p["name"])} {p["box_type"]} Box</a></li>'
+            for p in sorted(by_season[season], key=lambda p: (p["line"], p["box_type"])))
+        parts.append(f"<details><summary>{season} ({len(by_season[season])})</summary><ul>{items}</ul></details>")
+    return "".join(parts)
+
+
+def listing_badges(l):
+    if not l["in_stock"]:
+        return "Out of stock"
+    b = []
+    if l["store_sale_pct"] >= SALE_MIN_PCT:
+        b.append(f'−{round(l["store_sale_pct"])}% store sale')
+    if l["drop_pct"] >= SALE_MIN_PCT:
+        b.append(f'↓ {round(l["drop_pct"])}% price drop')
+    if l["below_market_pct"]:
+        b.append(f'{round(l["below_market_pct"])}% under other stores')
+    return " · ".join(b)
+
+
+def write_product_pages(site, products, generated):
+    template = (ROOT / "web" / "product.html").read_text()
+    esc = html.escape
+    by_season = {}
+    for p in products:
+        by_season.setdefault(p["season"], []).append(p)
+    for p in products:
+        title = f'{p["name"]} Hockey {p["box_type"]} Box'
+        url = f'{SITE_URL}/boxes/{p["slug"]}/'
+        listings = p["listings"]
+        in_stock = [l for l in listings if l["in_stock"]]
+        best = in_stock[0] if in_stock else None
+        h = p["hits"]
+        names = [n.split(" (")[0] for n in (h["young_guns"] or h["rookie_class"])][:3]
+
+        desc = f"Compare {title} prices at {len(listings)} Canadian store{'s' if len(listings) != 1 else ''}."
+        if best:
+            desc += f" Lowest in-stock price {money(best['price'])} CAD at {best['store']}."
+        if names:
+            desc += f" Top rookies: {', '.join(names)}."
+
+        rows = "".join(
+            f'<tr class="{"" if l["in_stock"] else "oos"}"><td><a href="{esc(l["url"])}" rel="nofollow noopener" target="_blank">'
+            f'{esc(l["store"])}</a><br><span class="badge {"sale" if l["on_sale"] else "oos"}">{esc(listing_badges(l))}</span></td>'
+            f'<td class="pr">{"<s>" + money(l["regular"]) + "</s>" if l["regular"] else ""}{money(l["price"])}</td></tr>'
+            for l in listings)
+
+        def section(label, items):
+            return f"<h3>{label}</h3><ul>{''.join(f'<li>{esc(i)}</li>' for i in items)}</ul>" if items else ""
+        hits_html = (section("Popular Young Guns / rookies", h["young_guns"]) +
+                     section("Rookie class to chase", h["rookie_class"]) +
+                     section("Top hits in this product", h["chase"]) +
+                     (f'<p class="sub"><em>{esc(h["note"])}</em></p>' if h["note"] else "")) or \
+            '<p class="sub">No hit information for this product yet.</p>'
+
+        related = "".join(f'<a href="/boxes/{o["slug"]}/">{esc(o["line"])} {o["box_type"]}</a>'
+                          for o in by_season[p["season"]] if o is not p)
+
+        prices = [l["price"] for l in listings]
+        schema = {
+            "@context": "https://schema.org", "@type": "Product", "name": title,
+            "brand": {"@type": "Brand", "name": "Upper Deck"}, "category": "Sports trading cards",
+            "description": desc, "url": url,
+            "offers": {"@type": "AggregateOffer", "priceCurrency": "CAD", "offerCount": len(listings),
+                       "lowPrice": min(prices), "highPrice": max(prices),
+                       "availability": "https://schema.org/InStock" if in_stock else "https://schema.org/OutOfStock"},
+        }
+        image = next((l["image"] for l in listings if l["image"]), None)
+        if image:
+            schema["image"] = image
+        crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Hockey Card Sales", "item": SITE_URL + "/"},
+            {"@type": "ListItem", "position": 2, "name": title, "item": url}]}
+
+        fill = {
+            "TITLE": esc(title), "DESC": esc(desc), "URL": url, "IMAGE": esc(image or ""),
+            "IMG_TAG": f'<img src="{esc(image)}" alt="{esc(title)}">' if image else "",
+            "BEST": money(best["price"]) if best else "Out of stock",
+            "BEST_NOTE": f'lowest in-stock price · {esc(best["store"])}' if best else "no store has it in stock right now",
+            "SALE": '<span class="badge sale">On sale</span>' if p["on_sale"] else "",
+            "BOX_TYPE": p["box_type"], "SEASON": p["season"], "ROWS": rows, "HITS": hits_html,
+            "RELATED": related, "UPDATED": generated[:10],
+            "SCHEMA": json.dumps(schema).replace("</", "<\\/"), "CRUMBS": json.dumps(crumbs),
+        }
+        out = template
+        for k, v in fill.items():
+            out = out.replace("{{" + k + "}}", str(v))
+        d = site / "boxes" / p["slug"]
+        d.mkdir(parents=True, exist_ok=True)
+        (d / "index.html").write_text(out)
+
+
+def write_sitemap(site, products, generated):
+    day = generated[:10]
+    urls = [f"{SITE_URL}/"] + [f'{SITE_URL}/boxes/{p["slug"]}/' for p in products]
+    body = "".join(f"<url><loc>{u}</loc><lastmod>{day}</lastmod></url>" for u in urls)
+    (site / "sitemap.xml").write_text(
+        f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{body}</urlset>')
+    (site / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n")
 
 
 def serve():

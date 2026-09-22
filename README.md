@@ -1,4 +1,6 @@
-# BoxWatch — Upper Deck NHL box price tracker (Canada)
+# Hockey Card Sales — Upper Deck NHL box price tracker (Canada)
+
+Live at https://hockeycardsales.app
 
 Tracks hobby and blaster box prices for Upper Deck NHL products at Canadian retailers,
 flags sales, and shows the top hits / popular Young Guns for each product.

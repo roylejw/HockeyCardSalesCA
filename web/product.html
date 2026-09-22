@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} – Best Price in Canada | Hockey Card Sales</title>
+<meta name="description" content="{{DESC}}">
+<link rel="canonical" href="{{URL}}">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="Hockey Card Sales">
+<meta property="og:title" content="{{TITLE}} – Best Price in Canada">
+<meta property="og:description" content="{{DESC}}">
+<meta property="og:url" content="{{URL}}">
+<meta property="og:image" content="{{IMAGE}}">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{{SCHEMA}}</script>
+<script type="application/ld+json">{{CRUMBS}}</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <a class="home brand" href="/">Hockey Card <span>Sales</span></a>
+    <div class="sub">Upper Deck NHL hobby &amp; blaster box prices in Canada</div>
+  </header>
+
+  <nav class="crumbs"><a href="/">All boxes</a> › {{SEASON}} › {{TITLE}}</nav>
+
+  <div class="prod-head">
+    {{IMG_TAG}}
+    <div>
+      <h1>{{TITLE}}</h1>
+      <div class="meta"><span class="pill hobby">{{BOX_TYPE}} box</span><span class="pill">{{SEASON}} season</span> {{SALE}}</div>
+      <div class="prod-best">{{BEST}}</div>
+      <div class="sub">{{BEST_NOTE}}</div>
+    </div>
+  </div>
+
+  <div class="two">
+    <section class="panel">
+      <table>
+        <tr><td><strong>Store</strong></td><td class="pr"><strong>Price (CAD)</strong></td></tr>
+        {{ROWS}}
+      </table>
+    </section>
+    <section class="panel pad">
+      {{HITS}}
+    </section>
+  </div>
+
+  <h2>More {{SEASON}} boxes</h2>
+  <div class="links">{{RELATED}}</div>
+
+  <p class="sub" style="margin-top:28px;font-size:12.5px">Prices last checked {{UPDATED}} and may have changed since — always confirm on the store's site.
+    Not affiliated with Upper Deck, the NHL, or any retailer listed. Top-hit lists are curated and may be incomplete.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+{
+  "_comment": "Curated 'top hits' shown on each product. 'products' is keyed by 'season|line' and wins over the generic 'lines' + 'seasons' fallback. Edit freely — the site rebuilds from this file.",
+
+  "products": {
+    "2026-27|Series 1": {
+      "young_guns": ["Porter Martone (PHI)", "James Hagens (BOS)", "Carter Yakemchuk (OTT)", "David Reinbacher (MTL)"],
+      "note": "Releases Oct 7, 2026. Names are anticipated rookies, not a final checklist."
+    },
+    "2025-26|Series 1": {
+      "young_guns": ["Ivan Demidov (MTL)", "Ryan Leonard (WSH)", "Gabe Perreault (NYR)", "Jimmy Snuggerud (STL)", "Artyom Levshunov (CHI)"],
+      "chase": ["#250 Young Guns Checklist – Demidov / Levshunov"]
+    },
+    "2025-26|Series 2": {
+      "young_guns": ["Matthew Schaefer (NYI)", "Michael Misa (SJ)", "Easton Cowan (TOR)", "Zeev Buium (MIN)", "Sam Dickinson (SJ)", "Ben Kindel (PIT)", "Isaac Howard (EDM)", "Danila Yurov (MIN)"],
+      "chase": ["Ivan Demidov UD Canvas Young Guns"]
+    },
+    "2025-26|Extended Series": {
+      "young_guns": ["Young Guns / 1st Round Rookies from the 2025-26 class"],
+      "chase": ["NHL Debut Game Jersey cards (new)", "HoloGrFX insert (new)"],
+      "note": "Headline names across the 2025-26 class: Schaefer, Misa, Sennecke, Demidov, Leonard, Cowan, Parekh. Confirm the Extended checklist before buying for one player."
+    },
+    "2024-25|Series 1": {
+      "young_guns": ["Lane Hutson (MTL)", "Cutter Gauthier (ANA)", "Logan Stankoven (DAL)", "Jesper Wallstedt (MIN)", "Matt Rempe (NYR)", "Josh Doan (UTA)", "Mavrik Bourque (DAL)"]
+    },
+    "2024-25|Series 2": {
+      "young_guns": ["Macklin Celebrini (SJ)", "Matvei Michkov (PHI)"],
+      "chase": ["#500 Young Guns Checklist – Celebrini / Michkov"]
+    },
+    "2024-25|Extended Series": {
+      "young_guns": ["Will Smith (SJ)", "Jonathan Lekkerimaki (VAN)"]
+    },
+    "2023-24|Series 1": {
+      "young_guns": ["Luke Hughes (NJ)", "Matthew Knies (TOR)"],
+      "chase": ["#250 Young Guns Checklist – Hughes / Knies"]
+    },
+    "2023-24|Series 2": {
+      "young_guns": ["Connor Bedard (CHI)", "Leo Carlsson (ANA)"],
+      "chase": ["#500 Young Guns Checklist – Bedard / Carlsson"]
+    },
+    "2023-24|Extended Series": {
+      "young_guns": ["Adam Fantilli (CBJ)"]
+    }
+  },
+
+  "seasons": {
+    "2026-27": ["Porter Martone", "James Hagens", "Carter Yakemchuk", "David Reinbacher"],
+    "2025-26": ["Matthew Schaefer", "Ivan Demidov", "Michael Misa", "Beckett Sennecke", "Ryan Leonard", "Zayne Parekh", "Easton Cowan", "Zeev Buium"],
+    "2024-25": ["Macklin Celebrini", "Matvei Michkov", "Lane Hutson", "Cutter Gauthier", "Will Smith", "Logan Stankoven"],
+    "2023-24": ["Connor Bedard", "Adam Fantilli", "Leo Carlsson", "Luke Hughes", "Matthew Knies"],
+    "2022-23": ["Shane Wright", "Matty Beniers", "Owen Power", "Mason McTavish"]
+  },
+
+  "lines": {
+    "Series 1":            ["Young Guns (6 per hobby box)", "Young Guns Exclusives /100", "UD Canvas Young Guns"],
+    "Series 2":            ["Young Guns (6 per hobby box)", "Young Guns Exclusives /100", "UD Canvas Young Guns"],
+    "Extended Series":     ["Young Guns / 1st Round Rookies", "Young Guns Exclusives /100", "UD Canvas Young Guns"],
+    "O-Pee-Chee":          ["Marquee Rookies", "Retro & Black Border parallels"],
+    "O-Pee-Chee Platinum": ["Marquee Rookies", "Low-numbered colour parallels"],
+    "MVP":                 ["Rookie cards (short prints)", "Super Script parallels"],
+    "SP Authentic":        ["Future Watch Autograph rookies", "Limited Autographs", "Sign of the Times autos"],
+    "SP Game Used":        ["Rookie autograph / patch cards", "Tag autos"],
+    "SPx":                 ["Rookie Auto Jersey cards"],
+    "Ice":                 ["Ice Premieres rookies", "Premieres autographs"],
+    "Artifacts":           ["Rookie redemptions", "Rookie Materials autos"],
+    "The Cup":             ["Rookie Patch Autographs (RPA)", "Rookie Auto Patch parallels"],
+    "Trilogy":             ["Rookie Premieres autographs"],
+    "Black Diamond":       ["Rookie Gems", "Quad Diamond rookies"],
+    "Premier":             ["Rookie Autograph Patches"],
+    "Ultimate Collection": ["Rookie autograph patches"],
+    "Synergy":             ["Rookie cards & rookie parallels"],
+    "Allure":              ["Rookie colour parallels"],
+    "Parkhurst":           ["Parkhurst rookies"],
+    "Parkhurst Champions": ["Rookie autographs", "Legends autographs"],
+    "Tim Hortons":         ["Rookie & autograph inserts"]
+  }
+}

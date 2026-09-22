@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Box Watch</title>
+<style>
+:root {
+  --bg: #f4f6f9; --panel: #ffffff; --ink: #14202e; --muted: #5d6b7b; --line: #dde3ea;
+  --accent: #0b4f8a; --sale: #c0262d; --sale-bg: #fdecec; --good: #1f7a45; --good-bg: #e6f4ec;
+  --pill: #eef2f7; --shadow: 0 1px 2px rgba(16,32,48,.06), 0 2px 8px rgba(16,32,48,.05);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e141b; --panel: #161f29; --ink: #e6edf4; --muted: #93a2b3; --line: #263241;
+    --accent: #6fb3f2; --sale: #ff7a7f; --sale-bg: #3a1a1d; --good: #6fd39a; --good-bg: #16301f;
+    --pill: #1f2a37; --shadow: none; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e141b; --panel: #161f29; --ink: #e6edf4; --muted: #93a2b3; --line: #263241;
+  --accent: #6fb3f2; --sale: #ff7a7f; --sale-bg: #3a1a1d; --good: #6fd39a; --good-bg: #16301f;
+  --pill: #1f2a37; --shadow: none; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 24px 20px 60px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 18px; }
+h1 { font-size: 24px; margin: 0; letter-spacing: -.01em; }
+h1 span { color: var(--accent); }
+.sub { color: var(--muted); }
+h2 { font-size: 15px; margin: 26px 0 10px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+
+.deals { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.deal { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 12px;
+  box-shadow: var(--shadow); text-decoration: none; color: inherit; display: block; }
+.deal:hover { border-color: var(--accent); }
+.deal .n { font-weight: 600; }
+.deal .p { font-size: 20px; font-weight: 700; margin-top: 4px; }
+
+.filters { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg);
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.filters input[type=search], .filters select { font: inherit; color: inherit; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; }
+.filters input[type=search] { flex: 1 1 220px; min-width: 0; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { font: inherit; color: inherit; background: var(--panel); border: 0; padding: 7px 12px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button.on { background: var(--accent); color: #fff; }
+.chk { display: inline-flex; gap: 5px; align-items: center; color: var(--muted); cursor: pointer; }
+.count { margin-left: auto; color: var(--muted); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 14px; margin-top: 14px; }
+@media (max-width: 420px) { .grid { grid-template-columns: 1fr; } }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; overflow: hidden; }
+.card.sale { border-color: color-mix(in srgb, var(--sale) 45%, var(--line)); }
+.top { display: flex; gap: 12px; padding: 14px 14px 10px; }
+.top img { width: 64px; height: 64px; object-fit: contain; border-radius: 6px; background: #fff; flex: none; }
+.title { font-weight: 650; font-size: 15px; line-height: 1.25; }
+.meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 5px; }
+.pill { background: var(--pill); border-radius: 999px; padding: 1px 8px; font-size: 12px; color: var(--muted); }
+.pill.hobby { color: var(--accent); }
+.best { margin-left: auto; text-align: right; flex: none; }
+.best .p { font-size: 22px; font-weight: 750; }
+.best .s { font-size: 12px; color: var(--muted); }
+.badge { display: inline-block; font-size: 11.5px; font-weight: 650; border-radius: 5px; padding: 1px 6px; }
+.badge.sale { background: var(--sale-bg); color: var(--sale); }
+.badge.low { background: var(--good-bg); color: var(--good); }
+.badge.oos { background: var(--pill); color: var(--muted); }
+.spark { padding: 0 14px; color: var(--accent); }
+.spark svg { width: 100%; height: 34px; display: block; }
+.spark .lbl { font-size: 11.5px; color: var(--muted); display: flex; justify-content: space-between; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+td { padding: 6px 14px; border-top: 1px solid var(--line); vertical-align: middle; }
+td.pr { text-align: right; white-space: nowrap; font-weight: 600; }
+td.pr s { color: var(--muted); font-weight: 400; margin-right: 4px; }
+tr.oos td { color: var(--muted); }
+td a { color: var(--accent); text-decoration: none; }
+td a:hover { text-decoration: underline; }
+.more-rows { font: inherit; background: none; border: 0; color: var(--accent); cursor: pointer; padding: 6px 14px; text-align: left; }
+
+details.hits { border-top: 1px solid var(--line); padding: 8px 14px 12px; margin-top: auto; }
+details.hits summary { cursor: pointer; font-weight: 600; color: var(--accent); list-style: none; }
+details.hits summary::-webkit-details-marker { display: none; }
+details.hits summary::before { content: "▸ "; }
+details.hits[open] summary::before { content: "▾ "; }
+.hits h4 { margin: 10px 0 4px; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.hits ul { margin: 0; padding-left: 18px; }
+.hits .note { font-size: 12.5px; color: var(--muted); margin-top: 8px; font-style: italic; }
+
+.loadmore { display: block; margin: 20px auto; font: inherit; padding: 9px 18px; border-radius: 8px;
+  border: 1px solid var(--line); background: var(--panel); color: inherit; cursor: pointer; }
+.stores { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12.5px; }
+.stores span { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; }
+.stores .bad { color: var(--sale); }
+.empty { color: var(--muted); padding: 40px 0; text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Box<span>Watch</span></h1>
+    <div class="sub">Upper Deck NHL hobby &amp; blaster boxes at Canadian stores · prices in CAD · <span id="updated"></span></div>
+  </header>
+
+  <h2 id="dealsHead">Best deals right now</h2>
+  <div class="deals" id="deals"></div>
+
+  <h2>All boxes</h2>
+  <div class="filters">
+    <input type="search" id="q" placeholder="Search e.g. Series 1, SP Authentic, Demidov…">
+    <div class="seg" id="type">
+      <button data-v="" class="on">All</button><button data-v="Hobby">Hobby</button><button data-v="Blaster">Blaster</button>
+    </div>
+    <select id="season"></select>
+    <select id="store"></select>
+    <select id="sort">
+      <option value="season">Newest season</option>
+      <option value="deal">Biggest discount</option>
+      <option value="low">Price: low → high</option>
+      <option value="high">Price: high → low</option>
+    </select>
+    <label class="chk"><input type="checkbox" id="sale"> On sale</label>
+    <label class="chk"><input type="checkbox" id="stock" checked> In stock</label>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="grid" id="grid"></div>
+  <button class="loadmore" id="loadmore" hidden>Show more</button>
+
+  <h2>Stores checked</h2>
+  <div class="stores" id="stores"></div>
+  <p class="sub" style="margin-top:28px;font-size:12.5px">Prices are checked once a day and may have changed since — always confirm on the store's site.
+    Not affiliated with Upper Deck, the NHL, or any retailer listed. Top-hit lists are curated and may be incomplete.</p>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const money = n => n == null ? "—" : "$" + n.toFixed(2);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PAGE = 60;
+let shown = PAGE;
+
+const state = { q: "", type: "", season: "", store: "", sort: "season", sale: false, stock: true };
+
+function init() {
+  $("#updated").textContent = "updated " + new Date(DATA.generated).toLocaleString();
+  const seasons = [...new Set(DATA.products.map(p => p.season))].sort().reverse();
+  $("#season").innerHTML = `<option value="">All seasons</option>` +
+    seasons.map(s => `<option>${s}</option>`).join("");
+  const stores = [...new Set(DATA.products.flatMap(p => p.listings.map(l => l.store)))].sort();
+  $("#store").innerHTML = `<option value="">All stores</option>` + stores.map(s => `<option>${esc(s)}</option>`).join("");
+
+  $("#q").addEventListener("input", e => { state.q = e.target.value.toLowerCase(); reset(); });
+  $("#type").addEventListener("click", e => {
+    if (!e.target.dataset) return;
+    state.type = e.target.dataset.v ?? state.type;
+    $("#type").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.v === state.type));
+    reset();
+  });
+  for (const id of ["season", "store", "sort"]) $("#" + id).addEventListener("change", e => { state[id] = e.target.value; reset(); });
+  for (const id of ["sale", "stock"]) $("#" + id).addEventListener("change", e => { state[id] = e.target.checked; reset(); });
+  $("#loadmore").addEventListener("click", () => { shown += PAGE; render(); });
+
+  renderDeals();
+  renderStores();
+  render();
+}
+
+function reset() { shown = PAGE; render(); }
+
+function visibleListings(p) {
+  return p.listings.filter(l => (!state.store || l.store === state.store) && (!state.stock || l.in_stock));
+}
+
+function filtered() {
+  const q = state.q;
+  let out = DATA.products.filter(p => {
+    if (state.type && p.box_type !== state.type) return false;
+    if (state.season && p.season !== state.season) return false;
+    const ls = visibleListings(p);
+    if (!ls.length) return false;
+    if (state.sale && !ls.some(l => l.on_sale)) return false;
+    if (q) {
+      const hay = (p.name + " " + p.box_type + " " + p.hits.young_guns.join(" ") + " " +
+        p.hits.rookie_class.join(" ") + " " + ls.map(l => l.store + " " + l.title).join(" ")).toLowerCase();
+      if (!hay.includes(q.trim())) return false;
+    }
+    return true;
+  });
+  const best = p => { const ls = visibleListings(p).filter(l => l.in_stock); return ls.length ? ls[0].price : Infinity; };
+  const disc = p => Math.max(0, ...visibleListings(p).filter(l => l.on_sale).map(l => l.sale_pct));
+  const sorters = {
+    season: (a, b) => b.season.localeCompare(a.season) || a.line.localeCompare(b.line) || a.box_type.localeCompare(b.box_type),
+    deal: (a, b) => disc(b) - disc(a),
+    low: (a, b) => best(a) - best(b),
+    high: (a, b) => (best(b) === Infinity ? -1 : best(b)) - (best(a) === Infinity ? -1 : best(a)),
+  };
+  return out.sort(sorters[state.sort]);
+}
+
+function saleBadges(l) {
+  const b = [];
+  if (!l.in_stock) return `<span class="badge oos">Out of stock</span>`;
+  if (l.store_sale_pct >= 5) b.push(`<span class="badge sale" title="Store shows a regular price of ${money(l.regular)}">−${Math.round(l.store_sale_pct)}% store sale</span>`);
+  if (l.drop_pct >= 5) b.push(`<span class="badge sale" title="Was ${money(l.previous_price)}">↓ ${Math.round(l.drop_pct)}% price drop</span>`);
+  if (l.below_market_pct) b.push(`<span class="badge sale" title="Compared with the median in-stock price at other stores">${Math.round(l.below_market_pct)}% under other stores</span>`);
+  if (l.history.length > 1 && l.price <= l.low_90d && l.high_90d > l.price) b.push(`<span class="badge low">90-day low</span>`);
+  return b.join(" ");
+}
+
+function sparkline(p) {
+  // Cheapest in-stock price per day across all stores.
+  const byDay = {};
+  for (const l of p.listings) for (const [d, pr] of l.history) byDay[d] = Math.min(byDay[d] ?? Infinity, pr);
+  const pts = Object.entries(byDay).sort();
+  if (pts.length < 2) return "";
+  const vals = pts.map(x => x[1]), lo = Math.min(...vals), hi = Math.max(...vals), span = hi - lo || 1;
+  const W = 300, H = 30;
+  const path = pts.map(([, v], i) => `${(i / (pts.length - 1) * W).toFixed(1)},${(H - (v - lo) / span * (H - 4) - 2).toFixed(1)}`).join(" ");
+  return `<div class="spark"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-label="Lowest price history">
+    <polyline points="${path}" fill="none" stroke="currentColor" stroke-width="1.8" vector-effect="non-scaling-stroke"/></svg>
+    <div class="lbl"><span>${pts[0][0]}</span><span>low ${money(lo)} · high ${money(hi)}</span><span>${pts.at(-1)[0]}</span></div></div>`;
+}
+
+function hitsBlock(h) {
+  const list = xs => `<ul>${xs.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
+  let body = "";
+  if (h.young_guns.length) body += `<h4>Popular Young Guns / rookies</h4>${list(h.young_guns)}`;
+  if (h.rookie_class.length) body += `<h4>Rookie class to chase</h4>${list(h.rookie_class)}`;
+  if (h.chase.length) body += `<h4>Top hits in this product</h4>${list(h.chase)}`;
+  if (h.note) body += `<div class="note">${esc(h.note)}</div>`;
+  if (!body) body = `<div class="note">No hit info yet — add this product to data/hits.json.</div>`;
+  const label = h.young_guns.length ? "Top hits & Young Guns" : "Top hits";
+  return `<details class="hits"><summary>${label}</summary>${body}</details>`;
+}
+
+function card(p) {
+  const ls = visibleListings(p);
+  const inStock = ls.filter(l => l.in_stock);
+  const best = inStock[0];
+  const onSale = ls.some(l => l.on_sale);
+  const img = ls.find(l => l.image)?.image;
+  const rows = ls.map((l, i) => `<tr class="${l.in_stock ? "" : "oos"}" ${i >= 4 ? 'data-extra hidden' : ""}>
+      <td><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.store)}</a><br>${saleBadges(l)}</td>
+      <td class="pr">${l.regular && l.regular > l.price ? `<s>${money(l.regular)}</s>` : ""}${money(l.price)}</td></tr>`).join("");
+  const more = ls.length > 4 ? `<button class="more-rows" onclick="this.previousElementSibling.querySelectorAll('[data-extra]').forEach(r=>r.hidden=false);this.remove()">+ ${ls.length - 4} more stores</button>` : "";
+  return `<article class="card ${onSale ? "sale" : ""}">
+    <div class="top">
+      ${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : ""}
+      <div>
+        <div class="title">${esc(p.name)}</div>
+        <div class="meta"><span class="pill ${p.box_type === "Hobby" ? "hobby" : ""}">${p.box_type} box</span>
+          <span class="pill">${ls.length} store${ls.length === 1 ? "" : "s"}</span></div>
+      </div>
+      <div class="best">
+        <div class="p">${best ? money(best.price) : "—"}</div>
+        <div class="s">${best ? "best · " + esc(best.store) : "out of stock"}</div>
+      </div>
+    </div>
+    ${sparkline(p)}
+    <table>${rows}</table>${more}
+    ${hitsBlock(p.hits)}
+  </article>`;
+}
+
+function render() {
+  const list = filtered();
+  $("#count").textContent = `${list.length} product${list.length === 1 ? "" : "s"}`;
+  $("#grid").innerHTML = list.length ? list.slice(0, shown).map(card).join("")
+    : `<div class="empty">No boxes match these filters.</div>`;
+  $("#loadmore").hidden = list.length <= shown;
+}
+
+function renderDeals() {
+  const deals = DATA.products.flatMap(p => p.listings.filter(l => l.on_sale).map(l => ({ p, l })))
+    .sort((a, b) => b.p.season.localeCompare(a.p.season) || b.l.sale_pct - a.l.sale_pct);
+  // Favour recent seasons: top 12 among the three newest seasons that have deals, then fill with anything.
+  const seasons = [...new Set(deals.map(d => d.p.season))].slice(0, 3);
+  const recent = deals.filter(d => seasons.includes(d.p.season)).sort((a, b) => b.l.sale_pct - a.l.sale_pct);
+  const top = recent.slice(0, 12);
+  if (!top.length) { $("#dealsHead").hidden = true; return; }
+  $("#deals").innerHTML = top.map(({ p, l }) => `<a class="deal" href="${esc(l.url)}" target="_blank" rel="noopener">
+      <div class="n">${esc(p.name)} <span class="pill">${p.box_type}</span></div>
+      <div class="p">${money(l.price)} ${l.regular ? `<s class="sub" style="font-size:13px;font-weight:400">${money(l.regular)}</s>` : ""}</div>
+      <div class="sub">${esc(l.store)}</div>
+      <div style="margin-top:6px">${saleBadges(l)}</div></a>`).join("");
+}
+
+function renderStores() {
+  $("#stores").innerHTML = DATA.runs.map(r => r.ok
+    ? `<span>${esc(r.store)} · ${r.listings}</span>`
+    : `<span class="bad" title="${esc(r.error)}">${esc(r.store)} · failed</span>`).join("");
+}
+
+init();
+</script>
+</body>
+</html>

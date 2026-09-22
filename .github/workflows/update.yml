@@ -1,0 +1,59 @@
+# Daily: scrape every store, save the price history back to the repo, publish the site to GitHub Pages.
+# On a code push: just rebuild and republish from the existing history.
+name: Update prices
+
+on:
+  schedule:
+    - cron: "0 12 * * *"   # 12:00 UTC = 8am Eastern (7am in winter)
+  workflow_dispatch:        # "Run workflow" button on the Actions tab
+  push:
+    branches: [main]
+
+permissions:
+  contents: write   # commit data/prices.db
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Scrape stores and build
+        if: github.event_name != 'push'
+        run: python -m tracker run
+
+      - name: Build only
+        if: github.event_name == 'push'
+        run: python -m tracker build
+
+      - name: Save price history
+        if: github.event_name != 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/prices.db
+          git diff --cached --quiet || git commit -m "Update prices $(date -u +%F)"
+          git push
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,15 @@
+{
+  "_comment": "Canadian retailers to track. platform = shopify | woocommerce. For Shopify, 'collections' are collection handles to page through (use \"all\" for the whole catalogue). For WooCommerce, 'search' terms hit the public Store API. Set enabled=false to skip a store. 'delay' = seconds between requests (honours the store's robots.txt Crawl-Delay; default 1.5).",
+  "stores": [
+    { "name": "401 Games",            "platform": "shopify",     "domain": "store.401games.ca",       "collections": ["hockey-boxes"], "province": "ON", "enabled": true },
+    { "name": "Hobbiesville",         "platform": "shopify",     "domain": "hobbiesville.com",        "collections": ["hockey-cards"], "province": "ON", "enabled": true },
+    { "name": "Hockey Card World",    "platform": "shopify",     "domain": "hockeycardworld.ca",      "collections": ["all"],          "province": "ON", "enabled": true },
+    { "name": "Miraj Trading",        "platform": "shopify",     "domain": "www.mirajtrading.com",    "collections": ["hockey-cards"], "province": "ON", "enabled": true },
+    { "name": "Hit Box Sports Cards", "platform": "shopify",     "domain": "hitboxsportscards.ca",    "collections": ["hockey-cards"], "province": "",   "enabled": true },
+    { "name": "Shopverse",            "platform": "shopify",     "domain": "shopverse.com",           "collections": ["hockey"],       "province": "ON", "enabled": true },
+    { "name": "Breakaway Sports Cards","platform": "woocommerce","domain": "breakawaysc.com",         "search": ["hockey"],            "province": "",   "enabled": true },
+    { "name": "Stakk",                "platform": "woocommerce", "domain": "stakk.ca",                "search": ["hockey"],            "province": "QC", "enabled": true },
+    { "name": "Out of the Box Cards", "platform": "woocommerce", "domain": "www.outoftheboxcards.com","search": ["hockey"],            "province": "",   "enabled": true, "delay": 60 },
+    { "name": "Zephyr Epic",          "platform": "woocommerce", "domain": "zephyrepic.com",          "search": ["hockey"],            "province": "",   "enabled": true }
+  ]
+}

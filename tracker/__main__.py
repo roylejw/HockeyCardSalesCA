@@ -1,6 +1,6 @@
 """Usage:
     python3 -m tracker scrape    # fetch prices from every enabled store
-    python3 -m tracker build     # regenerate site/index.html from the database
+    python3 -m tracker build     # regenerate the site/ folder from the database
     python3 -m tracker run       # scrape + build
     python3 -m tracker serve     # view the site at http://localhost:8000
     python3 -m tracker reclassify  # re-apply classify.py rules to stored listings
@@ -24,6 +24,33 @@ BELOW_MARKET_PCT = 10     # flag listings this far under the median of other sto
 HISTORY_DAYS = 90
 SITE_URL = "https://hockeycardsales.app"
 
+# Everything that differs between the sport pages. Hockey stays at the site root so existing links work.
+SPORTS = {
+    "hockey": {
+        "label": "Hockey", "base": "/", "hits_file": "hits.json", "brand": "Upper Deck",
+        "page_title": "Hockey Card Sales – Upper Deck NHL Hobby, Blaster &amp; Tin Prices in Canada",
+        "meta_desc": "Compare prices on Upper Deck NHL hobby boxes, blasters and tins at Canadian card shops. "
+                     "Twice-daily price checks, sale alerts, and the top Young Guns in every box.",
+        "tagline": "Upper Deck NHL hobby boxes, blasters &amp; tins at Canadian stores · prices in CAD",
+        "search_hint": "Search e.g. Series 1, SP Authentic, Demidov…",
+        "season_all": "All seasons", "season_word": "season",
+        "rookies_label": "Popular Young Guns / rookies", "rookies_short": "Young Guns",
+    },
+    "baseball": {
+        "label": "Baseball", "base": "/baseball/", "hits_file": "hits_baseball.json", "brand": "Topps",
+        "page_title": "Baseball Card Sales – Topps &amp; Bowman Hobby, Blaster &amp; Tin Prices in Canada",
+        "meta_desc": "Compare prices on Topps and Bowman baseball hobby boxes, blasters and tins at Canadian card "
+                     "shops. Twice-daily price checks, sale alerts, and the top rookies and prospects in every box.",
+        "tagline": "Topps &amp; Bowman MLB hobby boxes, blasters &amp; tins at Canadian stores · 2020 onward · prices in CAD",
+        "search_hint": "Search e.g. Bowman Chrome, Series 1, Skenes…",
+        "season_all": "All years", "season_word": "year",
+        "rookies_label": "Key rookies / prospects", "rookies_short": "Top rookies",
+    },
+}
+BOX_LABELS = {"Hobby": "Hobby Box", "Jumbo": "Hobby Jumbo Box", "Breaker's Delight": "Breaker's Delight Box",
+              "Blaster": "Blaster Box", "Tin": "Tin"}
+BOX_GROUPS = {"Jumbo": "Hobby", "Breaker's Delight": "Hobby"}  # these show under the "Hobby" filter
+
 
 def now():
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -42,7 +69,7 @@ def scrape():
                 info = classify(item["title"])
                 if not info or item["price"] <= 0:  # $0 = unpriced placeholder
                     continue
-                lid = db.upsert_listing(conn, store["name"], item, info["key"], ts)
+                lid = db.upsert_listing(conn, store["name"], item, info, ts)
                 db.record_price(conn, lid, item, ts)
                 kept += 1
             conn.execute("INSERT INTO runs VALUES (?, ?, 1, ?, NULL)", (ts, store["name"], kept))
@@ -57,14 +84,15 @@ def scrape():
 def reclassify():
     conn = db.connect()
     changed = removed = 0
-    for l in conn.execute("SELECT id, title, product_key FROM listings").fetchall():
+    for l in conn.execute("SELECT id, title, product_key, sport FROM listings").fetchall():
         info = classify(l["title"])
         if not info:
             conn.execute("DELETE FROM prices WHERE listing_id = ?", (l["id"],))
             conn.execute("DELETE FROM listings WHERE id = ?", (l["id"],))
             removed += 1
-        elif info["key"] != l["product_key"]:
-            conn.execute("UPDATE listings SET product_key = ? WHERE id = ?", (info["key"], l["id"]))
+        elif (info["key"], info["sport"]) != (l["product_key"], l["sport"]):
+            conn.execute("UPDATE listings SET product_key = ?, sport = ? WHERE id = ?",
+                         (info["key"], info["sport"], l["id"]))
             changed += 1
     conn.commit()
     print(f"Reclassified: {changed} re-keyed, {removed} removed")
@@ -84,18 +112,14 @@ def pct(old, new):
     return round((old - new) / old * 100, 1) if old and old > new else 0
 
 
-def build():
-    conn = db.connect()
-    hits = json.loads((ROOT / "data" / "hits.json").read_text())
+def load_products(conn):
+    """Current listings with price history and sale signals, grouped into products per sport."""
     since = (datetime.now(timezone.utc) - timedelta(days=HISTORY_DAYS)).isoformat()
-
     # A listing is current only if its store's latest successful run saw it.
     last_ok = {r["store"]: r["ts"] for r in conn.execute(
         "SELECT store, MAX(ts) ts FROM runs WHERE ok = 1 GROUP BY store")}
-    runs = [dict(r) for r in conn.execute(
-        "SELECT store, ts, ok, listings, error FROM runs WHERE ts = (SELECT MAX(ts) FROM runs)")]
 
-    products = {}
+    grouped = {}
     for l in conn.execute("SELECT * FROM listings"):
         if l["last_seen"] != last_ok.get(l["store"]):
             continue
@@ -107,7 +131,7 @@ def build():
         cur = hist[-1]
         prev_prices = [h["price"] for h in hist[:-1]]
         earlier = next((p for p in reversed(prev_prices) if p != cur["price"]), None)
-        listing = {
+        grouped.setdefault((l["sport"], l["product_key"]), []).append({
             "store": l["store"], "url": l["url"], "title": l["title"], "image": l["image"],
             "price": cur["price"], "regular": cur["regular"], "in_stock": bool(cur["in_stock"]),
             "first_seen": l["first_seen"],
@@ -117,11 +141,11 @@ def build():
             "high_90d": max(h["price"] for h in hist),
             "low_90d": min(h["price"] for h in hist),
             "history": [[h["ts"][:10], h["price"]] for h in hist],
-        }
-        products.setdefault(l["product_key"], []).append(listing)
+        })
 
-    out = []
-    for key, listings in products.items():
+    hits = {s: json.loads((ROOT / "data" / cfg["hits_file"]).read_text()) for s, cfg in SPORTS.items()}
+    products = {s: [] for s in SPORTS}
+    for (sport, key), listings in grouped.items():
         season, line, box_type = key.split("|")
         for li in listings:
             others = [o["price"] for o in listings if o is not li and o["in_stock"]]
@@ -132,42 +156,81 @@ def build():
             li["on_sale"] = li["in_stock"] and li["sale_pct"] >= SALE_MIN_PCT
         listings.sort(key=lambda x: (not x["in_stock"], x["price"]))
         in_stock = [x for x in listings if x["in_stock"]]
-        out.append({
-            "key": key, "season": season, "line": line, "box_type": box_type,
-            "name": f"{season} Upper Deck {line}".replace("Upper Deck Upper Deck", "Upper Deck"),
+        name = (f"{season} Upper Deck {line}".replace("Upper Deck Upper Deck", "Upper Deck")
+                if sport == "hockey" else f"{season} {line}")
+        box_label = BOX_LABELS[box_type]
+        slug = slugify(f"{name} {box_label}")
+        products[sport].append({
+            "sport": sport, "key": key, "season": season, "line": line, "box_type": box_type,
+            "box_label": box_label, "box_group": BOX_GROUPS.get(box_type, box_type), "name": name,
             "listings": listings,
             "best_price": in_stock[0]["price"] if in_stock else None,
             "on_sale": any(x["on_sale"] for x in listings),
             "max_sale_pct": max((x["sale_pct"] for x in listings if x["on_sale"]), default=0),
-            "hits": hits_for(hits, season, line),
-            "slug": slugify(f"{season} upper deck {line} {box_type} box"),
+            "hits": hits_for(hits[sport], season, line),
+            "slug": slug, "path": f'{SPORTS[sport]["base"]}boxes/{slug}/',
         })
-    out.sort(key=lambda p: (p["season"], p["line"]), reverse=True)
+    for ps in products.values():
+        ps.sort(key=lambda p: (p["season"], p["line"]), reverse=True)
+    return products
 
+
+def build():
+    conn = db.connect()
+    runs = [dict(r) for r in conn.execute(
+        "SELECT store, ts, ok, listings, error FROM runs WHERE ts = (SELECT MAX(ts) FROM runs)")]
     checked = runs[0]["ts"] if runs else now()  # when prices were last scraped, not when the page was built
-    data = {"generated": now(), "checked": checked, "products": out, "runs": runs}
+    products = load_products(conn)
+
     site = ROOT / "site"
     if site.exists():
         shutil.rmtree(site)
     site.mkdir()
     shutil.copy(ROOT / "web" / "style.css", site / "style.css")
-    (site / "data.json").write_text(json.dumps(data))
-    page = (ROOT / "web" / "template.html").read_text()
-    payload = json.dumps(data).replace("</", "<\\/")
-    page = page.replace("/*__DATA__*/null", payload).replace("<!--__BROWSE__-->", browse_html(out))
-    (site / "index.html").write_text(page)
-    write_product_pages(site, out, checked)
-    write_sitemap(site, out, checked)
-    print(f"Built site/index.html — {len(out)} products, "
-          f"{sum(p['on_sale'] for p in out)} with sales")
+    template = (ROOT / "web" / "template.html").read_text()
+
+    for sport, cfg in SPORTS.items():
+        out = products[sport]
+        per_store = {}
+        for p in out:
+            for l in p["listings"]:
+                per_store[l["store"]] = per_store.get(l["store"], 0) + 1
+        store_status = [{"store": r["store"], "ok": r["ok"], "error": r["error"], "listings": per_store.get(r["store"], 0)}
+                        for r in runs if not r["ok"] or per_store.get(r["store"])]
+        data = {"generated": now(), "checked": checked, "sport": sport, "products": out, "runs": store_status,
+                "labels": {"season_all": cfg["season_all"], "rookies": cfg["rookies_label"],
+                           "rookies_short": cfg["rookies_short"]}}
+        folder = site / cfg["base"].strip("/") if cfg["base"] != "/" else site
+        folder.mkdir(parents=True, exist_ok=True)
+        (folder / "data.json").write_text(json.dumps(data))
+        fill = {
+            "PAGE_TITLE": cfg["page_title"], "META_DESC": cfg["meta_desc"], "TAGLINE": cfg["tagline"],
+            "CANONICAL": SITE_URL + cfg["base"], "SEARCH_HINT": cfg["search_hint"], "NAV": nav_html(sport),
+            "BROWSE": browse_html(out),
+        }
+        page = template
+        for k, v in fill.items():
+            page = page.replace("{{" + k + "}}", v)
+        page = page.replace("/*__DATA__*/null", json.dumps(data).replace("</", "<\\/"))
+        (folder / "index.html").write_text(page)
+        write_product_pages(site, out, checked, cfg)
+        print(f"Built {cfg['label']:<8} — {len(out)} products, {sum(p['on_sale'] for p in out)} with sales")
+
+    write_sitemap(site, [p for ps in products.values() for p in ps], checked)
 
 
 def slugify(text):
-    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+    return re.sub(r"[^a-z0-9]+", "-", text.lower().replace("&", "and").replace("'", "")).strip("-")
 
 
 def money(n):
     return f"${n:,.2f}" if n is not None else "—"
+
+
+def nav_html(active):
+    current = ' aria-current="page"'
+    return "".join(f'<a href="{cfg["base"]}"{current if s == active else ""}>{cfg["label"]}</a>'
+                   for s, cfg in SPORTS.items())
 
 
 def browse_html(products):
@@ -178,7 +241,7 @@ def browse_html(products):
     parts = []
     for season in sorted(by_season, reverse=True):
         items = "".join(
-            f'<li><a href="/boxes/{p["slug"]}/">{html.escape(p["name"])} {p["box_type"]} Box</a></li>'
+            f'<li><a href="{p["path"]}">{html.escape(p["name"])} {html.escape(p["box_label"])}</a></li>'
             for p in sorted(by_season[season], key=lambda p: (p["line"], p["box_type"])))
         parts.append(f"<details><summary>{season} ({len(by_season[season])})</summary><ul>{items}</ul></details>")
     return "".join(parts)
@@ -197,15 +260,15 @@ def listing_badges(l):
     return " · ".join(b)
 
 
-def write_product_pages(site, products, generated):
+def write_product_pages(site, products, checked, cfg):
     template = (ROOT / "web" / "product.html").read_text()
     esc = html.escape
     by_season = {}
     for p in products:
         by_season.setdefault(p["season"], []).append(p)
     for p in products:
-        title = f'{p["name"]} Hockey {p["box_type"]} Box'
-        url = f'{SITE_URL}/boxes/{p["slug"]}/'
+        title = f'{p["name"]} {cfg["label"]} {p["box_label"]}'
+        url = SITE_URL + p["path"]
         listings = p["listings"]
         in_stock = [l for l in listings if l["in_stock"]]
         best = in_stock[0] if in_stock else None
@@ -226,19 +289,19 @@ def write_product_pages(site, products, generated):
 
         def section(label, items):
             return f"<h3>{label}</h3><ul>{''.join(f'<li>{esc(i)}</li>' for i in items)}</ul>" if items else ""
-        hits_html = (section("Popular Young Guns / rookies", h["young_guns"]) +
+        hits_html = (section(cfg["rookies_label"], h["young_guns"]) +
                      section("Rookie class to chase", h["rookie_class"]) +
                      section("Top hits in this product", h["chase"]) +
                      (f'<p class="sub"><em>{esc(h["note"])}</em></p>' if h["note"] else "")) or \
             '<p class="sub">No hit information for this product yet.</p>'
 
-        related = "".join(f'<a href="/boxes/{o["slug"]}/">{esc(o["line"])} {o["box_type"]}</a>'
+        related = "".join(f'<a href="{o["path"]}">{esc(o["line"])} {esc(o["box_type"])}</a>'
                           for o in by_season[p["season"]] if o is not p)
 
         prices = [l["price"] for l in listings]
         schema = {
             "@context": "https://schema.org", "@type": "Product", "name": title,
-            "brand": {"@type": "Brand", "name": "Upper Deck"}, "category": "Sports trading cards",
+            "brand": {"@type": "Brand", "name": cfg["brand"]}, "category": "Sports trading cards",
             "description": desc, "url": url,
             "offers": {"@type": "AggregateOffer", "priceCurrency": "CAD", "offerCount": len(listings),
                        "lowPrice": min(prices), "highPrice": max(prices),
@@ -248,7 +311,7 @@ def write_product_pages(site, products, generated):
         if image:
             schema["image"] = image
         crumbs = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Hockey Card Sales", "item": SITE_URL + "/"},
+            {"@type": "ListItem", "position": 1, "name": f'{cfg["label"]} boxes', "item": SITE_URL + cfg["base"]},
             {"@type": "ListItem", "position": 2, "name": title, "item": url}]}
 
         fill = {
@@ -257,21 +320,23 @@ def write_product_pages(site, products, generated):
             "BEST": money(best["price"]) if best else "Out of stock",
             "BEST_NOTE": f'lowest in-stock price · {esc(best["store"])}' if best else "no store has it in stock right now",
             "SALE": '<span class="badge sale">On sale</span>' if p["on_sale"] else "",
-            "BOX_TYPE": p["box_type"], "SEASON": p["season"], "ROWS": rows, "HITS": hits_html,
-            "RELATED": related, "UPDATED": generated[:10],
+            "BOX_TYPE": esc(p["box_label"]), "SEASON": p["season"], "SEASON_WORD": cfg["season_word"],
+            "ROWS": rows, "HITS": hits_html, "RELATED": related, "UPDATED": checked[:10],
+            "NAV": nav_html(p["sport"]), "SPORT": cfg["label"], "SPORT_BASE": cfg["base"],
+            "TAGLINE": cfg["tagline"],
             "SCHEMA": json.dumps(schema).replace("</", "<\\/"), "CRUMBS": json.dumps(crumbs),
         }
         out = template
         for k, v in fill.items():
             out = out.replace("{{" + k + "}}", str(v))
-        d = site / "boxes" / p["slug"]
+        d = site / p["path"].strip("/")
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(out)
 
 
-def write_sitemap(site, products, generated):
-    day = generated[:10]
-    urls = [f"{SITE_URL}/"] + [f'{SITE_URL}/boxes/{p["slug"]}/' for p in products]
+def write_sitemap(site, products, checked):
+    day = checked[:10]
+    urls = [SITE_URL + cfg["base"] for cfg in SPORTS.values()] + [SITE_URL + p["path"] for p in products]
     body = "".join(f"<url><loc>{u}</loc><lastmod>{day}</lastmod></url>" for u in urls)
     (site / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{body}</urlset>')

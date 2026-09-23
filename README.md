@@ -2,10 +2,14 @@
 
 Live at https://hockeycardsales.app
 
-Tracks hobby and blaster box prices for Upper Deck NHL products at Canadian retailers,
-flags sales, and shows the top hits / popular Young Guns for each product.
+Tracks hobby box, blaster and tin prices at Canadian retailers, flags sales, and shows the top
+hits / rookies for each product:
 
-**Excluded:** AHL, PWHL, CHL/junior leagues, NCAA, Team Canada / Hockey Canada, Olympic
+- **Hockey** (site root): Upper Deck NHL products, every season.
+- **Baseball** (`/baseball/`): Topps and Bowman MLB products from 2020 on. Jumbo and Breaker's
+  Delight hobby boxes are tracked as their own box types so they aren't compared with regular hobby boxes.
+
+**Hockey excludes:** AHL, PWHL, CHL/junior leagues, NCAA, Team Canada / Hockey Canada, Olympic
 and other international products, and cases, packs, tins, breaks and accessories.
 
 ## Use it
@@ -37,8 +41,9 @@ A listing counts as **on sale** (in stock, ≥5% off) when any of these is true:
 | Path | What it is |
 |---|---|
 | `config/stores.json` | Stores to scrape. Add any Canadian **Shopify** or **WooCommerce** shop here — no code needed |
-| `data/hits.json` | Curated top hits / Young Guns per product. Edit it to add new sets |
-| `tracker/classify.py` | Rules for which listings count and how they're grouped |
+| `data/hits.json` | Curated hockey top hits / Young Guns per product. Edit it to add new sets |
+| `data/hits_baseball.json` | Curated baseball key rookies (flagship) and 1st Bowman prospects (Bowman) |
+| `tracker/classify.py` | Rules for which listings count, which sport they belong to, and how they're grouped |
 | `tracker/scrapers.py` | Shopify + WooCommerce adapters (public product APIs) |
 | `data/prices.db` | SQLite price history |
 | `web/template.html` | The site; `site/index.html` is generated from it |

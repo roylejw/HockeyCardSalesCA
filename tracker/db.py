@@ -7,6 +7,7 @@ SCHEMA = """
 CREATE TABLE IF NOT EXISTS listings (
     id INTEGER PRIMARY KEY,
     store TEXT NOT NULL,
+    sport TEXT NOT NULL DEFAULT 'hockey',
     url TEXT NOT NULL UNIQUE,
     title TEXT NOT NULL,
     product_key TEXT NOT NULL,
@@ -37,16 +38,20 @@ def connect():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     conn.executescript(SCHEMA)
+    cols = {r["name"] for r in conn.execute("PRAGMA table_info(listings)")}
+    if "sport" not in cols:  # databases created before baseball was added
+        conn.execute("ALTER TABLE listings ADD COLUMN sport TEXT NOT NULL DEFAULT 'hockey'")
     return conn
 
 
-def upsert_listing(conn, store, item, product_key, ts):
+def upsert_listing(conn, store, item, info, ts):
     conn.execute(
-        """INSERT INTO listings (store, url, title, product_key, image, first_seen, last_seen)
-           VALUES (?, ?, ?, ?, ?, ?, ?)
-           ON CONFLICT(url) DO UPDATE SET title=excluded.title, product_key=excluded.product_key,
-               image=COALESCE(excluded.image, listings.image), last_seen=excluded.last_seen""",
-        (store, item["url"], item["title"], product_key, item.get("image"), ts, ts),
+        """INSERT INTO listings (store, sport, url, title, product_key, image, first_seen, last_seen)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+           ON CONFLICT(url) DO UPDATE SET sport=excluded.sport, title=excluded.title,
+               product_key=excluded.product_key, image=COALESCE(excluded.image, listings.image),
+               last_seen=excluded.last_seen""",
+        (store, info["sport"], item["url"], item["title"], info["key"], item.get("image"), ts, ts),
     )
     return conn.execute("SELECT id FROM listings WHERE url = ?", (item["url"],)).fetchone()["id"]
 

@@ -1,5 +1,6 @@
 """Store adapters. Each yields raw listings: {title, url, price, regular, in_stock, image}.
 Prices are CAD floats; `regular` is the store's own "was" price when it shows one."""
+import html
 import time
 
 import requests
@@ -65,7 +66,7 @@ def woocommerce(store):
                 price = int(pr["price"]) / scale
                 regular = int(pr["regular_price"]) / scale if pr.get("regular_price") else None
                 yield {
-                    "title": p["name"], "url": p["permalink"], "price": price,
+                    "title": html.unescape(p["name"]), "url": p["permalink"], "price": price,
                     "regular": regular if regular and regular > price else None,
                     "in_stock": bool(p.get("is_in_stock")),
                     "image": (p.get("images") or [{}])[0].get("src"),

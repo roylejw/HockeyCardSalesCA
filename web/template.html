@@ -3,32 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hockey Card Sales – Upper Deck NHL Hobby &amp; Blaster Box Prices in Canada</title>
-<meta name="description" content="Compare prices on Upper Deck NHL hobby and blaster boxes at Canadian card shops. Twice-daily price checks, sale alerts, and the top Young Guns in every box.">
-<link rel="canonical" href="https://hockeycardsales.app/">
+<title>{{PAGE_TITLE}}</title>
+<meta name="description" content="{{META_DESC}}">
+<link rel="canonical" href="{{CANONICAL}}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Hockey Card Sales">
-<meta property="og:title" content="Hockey Card Sales – Upper Deck hockey box deals in Canada">
-<meta property="og:description" content="Daily prices on Upper Deck NHL hobby and blaster boxes from Canadian stores, with sales flagged and top Young Guns listed.">
-<meta property="og:url" content="https://hockeycardsales.app/">
+<meta property="og:title" content="{{PAGE_TITLE}}">
+<meta property="og:description" content="{{META_DESC}}">
+<meta property="og:url" content="{{CANONICAL}}">
 <link rel="stylesheet" href="/style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Hockey Card Sales","url":"https://hockeycardsales.app/"}</script>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>Hockey Card <span>Sales</span></h1>
-    <div class="sub">Upper Deck NHL hobby &amp; blaster boxes at Canadian stores · prices in CAD</div>
+    <a class="brand" href="/">Hockey Card <span>Sales</span></a>
+    <nav class="sports" aria-label="Sport">{{NAV}}</nav>
   </header>
+  <p class="sub tagline">{{TAGLINE}}</p>
 
   <h2 id="dealsHead">Best deals right now</h2>
   <div class="deals" id="deals"></div>
 
   <h2>All boxes</h2>
   <div class="filters">
-    <input type="search" id="q" placeholder="Search e.g. Series 1, SP Authentic, Demidov…">
+    <input type="search" id="q" placeholder="{{SEARCH_HINT}}">
     <div class="seg" id="type">
-      <button data-v="" class="on">All</button><button data-v="Hobby">Hobby</button><button data-v="Blaster">Blaster</button>
+      <button data-v="" class="on">All</button><button data-v="Hobby">Hobby</button><button data-v="Blaster">Blaster</button><button data-v="Tin">Tin</button>
     </div>
     <select id="season"></select>
     <select id="store"></select>
@@ -46,7 +47,7 @@
   <button class="loadmore" id="loadmore" hidden>Show more</button>
 
   <h2>Browse every box</h2>
-  <div class="browse"><!--__BROWSE__--></div>
+  <div class="browse">{{BROWSE}}</div>
 
   <h2>Stores checked</h2>
   <div class="stores" id="stores"></div>
@@ -67,7 +68,7 @@ const state = { q: "", type: "", season: "", store: "", sort: "season", sale: fa
 function init() {
   $("#updated").textContent = "Prices last checked " + new Date(DATA.checked).toLocaleString([], { dateStyle: "medium", timeStyle: "short" });
   const seasons = [...new Set(DATA.products.map(p => p.season))].sort().reverse();
-  $("#season").innerHTML = `<option value="">All seasons</option>` +
+  $("#season").innerHTML = `<option value="">${DATA.labels.season_all}</option>` +
     seasons.map(s => `<option>${s}</option>`).join("");
   const stores = [...new Set(DATA.products.flatMap(p => p.listings.map(l => l.store)))].sort();
   $("#store").innerHTML = `<option value="">All stores</option>` + stores.map(s => `<option>${esc(s)}</option>`).join("");
@@ -97,7 +98,7 @@ function visibleListings(p) {
 function filtered() {
   const q = state.q;
   let out = DATA.products.filter(p => {
-    if (state.type && p.box_type !== state.type) return false;
+    if (state.type && p.box_group !== state.type) return false;
     if (state.season && p.season !== state.season) return false;
     const ls = visibleListings(p);
     if (!ls.length) return false;
@@ -147,12 +148,12 @@ function sparkline(p) {
 function hitsBlock(h) {
   const list = xs => `<ul>${xs.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`;
   let body = "";
-  if (h.young_guns.length) body += `<h4>Popular Young Guns / rookies</h4>${list(h.young_guns)}`;
+  if (h.young_guns.length) body += `<h4>${DATA.labels.rookies}</h4>${list(h.young_guns)}`;
   if (h.rookie_class.length) body += `<h4>Rookie class to chase</h4>${list(h.rookie_class)}`;
   if (h.chase.length) body += `<h4>Top hits in this product</h4>${list(h.chase)}`;
   if (h.note) body += `<div class="note">${esc(h.note)}</div>`;
   if (!body) body = `<div class="note">No hit info yet — add this product to data/hits.json.</div>`;
-  const label = h.young_guns.length ? "Top hits & Young Guns" : "Top hits";
+  const label = h.young_guns.length ? `Top hits & ${DATA.labels.rookies_short}` : "Top hits";
   return `<details class="hits"><summary>${label}</summary>${body}</details>`;
 }
 
@@ -170,8 +171,8 @@ function card(p) {
     <div class="top">
       ${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : ""}
       <div>
-        <div class="title"><a href="/boxes/${p.slug}/">${esc(p.name)}</a></div>
-        <div class="meta"><span class="pill ${p.box_type === "Hobby" ? "hobby" : ""}">${p.box_type} box</span>
+        <div class="title"><a href="${p.path}">${esc(p.name)}</a></div>
+        <div class="meta"><span class="pill ${p.box_group === "Hobby" ? "hobby" : ""}">${esc(p.box_label)}</span>
           <span class="pill">${ls.length} store${ls.length === 1 ? "" : "s"}</span></div>
       </div>
       <div class="best">
@@ -202,7 +203,7 @@ function renderDeals() {
   const top = recent.slice(0, 12);
   if (!top.length) { $("#dealsHead").hidden = true; return; }
   $("#deals").innerHTML = top.map(({ p, l }) => `<a class="deal" href="${esc(l.url)}" target="_blank" rel="noopener">
-      <div class="n">${esc(p.name)} <span class="pill">${p.box_type}</span></div>
+      <div class="n">${esc(p.name)} <span class="pill">${esc(p.box_type)}</span></div>
       <div class="p">${money(l.price)} ${l.regular ? `<s class="sub" style="font-size:13px;font-weight:400">${money(l.regular)}</s>` : ""}</div>
       <div class="sub">${esc(l.store)}</div>
       <div style="margin-top:6px">${saleBadges(l)}</div></a>`).join("");

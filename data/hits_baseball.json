@@ -1,0 +1,516 @@
+{
+  "_comment": "Curated baseball 'top hits'. 'products' keyed by 'year|line' wins over 'lines' + 'seasons'. For Bowman, names are 1st Bowman prospects.",
+  "products": {
+    "2020|Topps Series 1": {
+      "young_guns": [
+        "Yordan Alvarez (HOU)",
+        "Bo Bichette (TOR)"
+      ]
+    },
+    "2020|Topps Series 2": {
+      "young_guns": [
+        "Luis Robert (CWS)",
+        "Kyle Lewis (SEA)"
+      ],
+      "chase": [
+        "#392 Rookie Stars SSP variation – Bichette / Robert / Alvarez"
+      ]
+    },
+    "2020|Topps Update": {
+      "young_guns": [
+        "Randy Arozarena (TB)",
+        "Luis Robert (CWS)",
+        "Bo Bichette (TOR)",
+        "Yordan Alvarez (HOU)",
+        "Gavin Lux (LAD)",
+        "Kyle Lewis (SEA)"
+      ]
+    },
+    "2021|Topps Series 1": {
+      "young_guns": [
+        "Alec Bohm (PHI)",
+        "Dylan Carlson (STL)",
+        "Joey Bart (SF)",
+        "Ryan Mountcastle (BAL)"
+      ]
+    },
+    "2021|Topps Series 2": {
+      "young_guns": [
+        "Ke'Bryan Hayes (PIT)"
+      ]
+    },
+    "2021|Topps Update": {
+      "young_guns": [
+        "Jarred Kelenic (SEA)",
+        "Jonathan India (CIN)"
+      ],
+      "note": "Wander Franco debuted in 2021 but his rookie cards are in 2022 sets."
+    },
+    "2022|Topps Series 1": {
+      "young_guns": [
+        "Wander Franco (TB)",
+        "Reid Detmers (LAA)",
+        "Jarren Duran (BOS)",
+        "Vidal Brujan (TB)"
+      ],
+      "note": "Franco's card has the RC logo, though he had an earlier 2021 Bowman's Best card."
+    },
+    "2022|Topps Series 2": {
+      "young_guns": [
+        "Spencer Strider (ATL)"
+      ],
+      "chase": [
+        "Short-print rookie variations of Julio Rodriguez, Bobby Witt Jr. and Spencer Torkelson"
+      ],
+      "note": "Julio, Witt Jr. and Torkelson appear here only as short-print variations; their first base cards are in 2022 Update."
+    },
+    "2022|Topps Update": {
+      "young_guns": [
+        "Julio Rodriguez (SEA)",
+        "Bobby Witt Jr. (KC)",
+        "Spencer Torkelson (DET)",
+        "Seiya Suzuki (CHC)"
+      ]
+    },
+    "2023|Topps Series 1": {
+      "young_guns": [
+        "Adley Rutschman (BAL)",
+        "Gunnar Henderson (BAL)",
+        "Michael Harris II (ATL)",
+        "Vinnie Pasquantino (KC)",
+        "Riley Greene (DET)",
+        "Nolan Gorman (STL)"
+      ]
+    },
+    "2023|Topps Series 2": {
+      "young_guns": [
+        "Corbin Carroll (ARI)"
+      ]
+    },
+    "2023|Topps Update": {
+      "young_guns": [
+        "Masataka Yoshida (BOS)",
+        "Josh Jung (TEX)",
+        "Eury Perez (MIA)",
+        "Zach Neto (LAA)",
+        "Grayson Rodriguez (BAL)"
+      ],
+      "note": "Elly De La Cruz debuted in 2023 but his rookie cards are in 2024 sets."
+    },
+    "2024|Topps Series 1": {
+      "young_guns": [
+        "Elly De La Cruz (CIN)",
+        "Evan Carter (TEX)"
+      ]
+    },
+    "2024|Topps Series 2": {
+      "young_guns": [],
+      "chase": [
+        "Short-print rookie variations of Jackson Holliday, Jackson Chourio, Jackson Merrill and Wyatt Langford"
+      ],
+      "note": "The big 2024 rookies appear here only as short prints; their base rookie cards are in 2024 Update."
+    },
+    "2024|Topps Update": {
+      "young_guns": [
+        "Paul Skenes (PIT)",
+        "Jackson Merrill (SD)",
+        "Jackson Chourio (MIL)",
+        "Jackson Holliday (BAL)",
+        "Wyatt Langford (TEX)"
+      ]
+    },
+    "2025|Topps Series 1": {
+      "young_guns": [
+        "James Wood (WSH)",
+        "Dylan Crews (WSH)",
+        "Brooks Lee (MIN)"
+      ]
+    },
+    "2025|Topps Series 2": {
+      "young_guns": [
+        "Roki Sasaki (LAD)",
+        "Jackson Jobe (DET)",
+        "Kristian Campbell (BOS)"
+      ],
+      "note": "Campbell's first base rookie card is a short print in this set."
+    },
+    "2025|Topps Update": {
+      "young_guns": [
+        "Nick Kurtz (ATH)",
+        "Jacob Wilson (ATH)",
+        "Roman Anthony (BOS)",
+        "Drake Baldwin (ATL)",
+        "Cade Horton (CHC)"
+      ]
+    },
+    "2026|Topps Series 1": {
+      "young_guns": [
+        "Roman Anthony (BOS)",
+        "Nick Kurtz (ATH)",
+        "Jac Caglianone (KC)",
+        "Jacob Misiorowski (MIL)",
+        "Colson Montgomery (CWS)",
+        "Samuel Basallo (BAL)"
+      ]
+    },
+    "2026|Topps Series 2": {
+      "young_guns": [
+        "Munetaka Murakami (CWS)",
+        "Kevin McGonigle (DET)",
+        "JJ Wetherholt (STL)",
+        "Bryce Eldridge (SF)",
+        "Justin Crawford (PHI)",
+        "Carson Benge (NYM)"
+      ],
+      "chase": [
+        "#697–700 short-print rookies – McGonigle, Wetherholt, Benge, Crawford"
+      ]
+    },
+    "2020|Bowman": {
+      "young_guns": [
+        "Jasson Dominguez (NYY) – 1st Bowman"
+      ]
+    },
+    "2020|Bowman Draft": {
+      "young_guns": [
+        "Spencer Torkelson (DET)",
+        "Heston Kjerstad (BAL)",
+        "Max Meyer (MIA)"
+      ],
+      "note": "1st Bowman cards for 18 of the top 20 2020 draft picks (not Austin Martin or Mick Abel)."
+    },
+    "2021|Bowman": {
+      "young_guns": [
+        "Austin Martin (TOR) – 1st Bowman"
+      ]
+    },
+    "2021|Bowman Draft": {
+      "young_guns": [
+        "Marcelo Mayer (BOS)",
+        "Jackson Merrill (SD)",
+        "Jordan Lawlar (ARI)",
+        "Henry Davis (PIT)",
+        "Jackson Jobe (DET)",
+        "Colton Cowser (BAL)"
+      ]
+    },
+    "2022|Bowman": {
+      "young_guns": [
+        "James Wood – 1st Bowman",
+        "Elly De La Cruz (CIN) – 1st Bowman"
+      ]
+    },
+    "2022|Bowman Draft": {
+      "young_guns": [
+        "Jackson Holliday (BAL)",
+        "Termarr Johnson (PIT)",
+        "Elijah Green (WSH)"
+      ]
+    },
+    "2023|Bowman": {
+      "young_guns": [
+        "Ethan Salas (SD)",
+        "Samuel Basallo (BAL)",
+        "Sebastian Walcott (TEX)",
+        "Felnin Celesten (SEA)"
+      ]
+    },
+    "2023|Bowman Draft": {
+      "young_guns": [
+        "Paul Skenes (PIT)",
+        "Wyatt Langford (TEX)"
+      ],
+      "note": "Dylan Crews and Walker Jenkins aren't in this set; their 1st Bowman cards are in 2024 Bowman."
+    },
+    "2024|Bowman": {
+      "young_guns": [
+        "Dylan Crews (WSH)",
+        "Walker Jenkins (MIN)"
+      ]
+    },
+    "2024|Bowman Chrome": {
+      "young_guns": [
+        "Leo De Vries (SD) – top 1st Bowman Chrome"
+      ]
+    },
+    "2024|Bowman Draft": {
+      "young_guns": [
+        "Travis Bazzana (CLE)",
+        "Jac Caglianone (KC)",
+        "Konnor Griffin (PIT)",
+        "Christian Moore (LAA)",
+        "Hagen Smith (CWS)"
+      ],
+      "note": "Charlie Condon and JJ Wetherholt aren't in this set."
+    },
+    "2025|Bowman": {
+      "young_guns": [
+        "Jesus Made (MIL) – top 1st Bowman"
+      ]
+    },
+    "2025|Bowman Chrome": {
+      "young_guns": [
+        "Josuar Gonzalez – top 1st Bowman Chrome"
+      ]
+    },
+    "2025|Bowman Draft": {
+      "young_guns": [
+        "Eli Willits",
+        "Kade Anderson",
+        "Seth Hernandez"
+      ]
+    },
+    "2026|Bowman": {
+      "young_guns": [
+        "Ethan Holliday (COL)",
+        "Edward Florentino",
+        "Caden Scarborough"
+      ]
+    }
+  },
+  "seasons": {
+    "2020": [
+      "Luis Robert",
+      "Yordan Alvarez",
+      "Bo Bichette",
+      "Randy Arozarena",
+      "Gavin Lux",
+      "Kyle Lewis"
+    ],
+    "2021": [
+      "Ke'Bryan Hayes",
+      "Jarred Kelenic",
+      "Jonathan India",
+      "Alec Bohm",
+      "Dylan Carlson",
+      "Ryan Mountcastle"
+    ],
+    "2022": [
+      "Julio Rodriguez",
+      "Bobby Witt Jr.",
+      "Wander Franco",
+      "Spencer Torkelson",
+      "Spencer Strider",
+      "Seiya Suzuki"
+    ],
+    "2023": [
+      "Gunnar Henderson",
+      "Corbin Carroll",
+      "Adley Rutschman",
+      "Michael Harris II",
+      "Masataka Yoshida",
+      "Josh Jung"
+    ],
+    "2024": [
+      "Paul Skenes",
+      "Elly De La Cruz",
+      "Jackson Holliday",
+      "Jackson Chourio",
+      "Jackson Merrill",
+      "Wyatt Langford",
+      "Evan Carter"
+    ],
+    "2025": [
+      "James Wood",
+      "Dylan Crews",
+      "Roki Sasaki",
+      "Nick Kurtz",
+      "Jacob Wilson",
+      "Kristian Campbell"
+    ],
+    "2026": [
+      "Roman Anthony",
+      "Munetaka Murakami",
+      "Kevin McGonigle",
+      "Jac Caglianone",
+      "Samuel Basallo",
+      "JJ Wetherholt"
+    ]
+  },
+  "lines": {
+    "Topps Series 1": [
+      "Rookie cards & short-print rookie variations",
+      "Certified autographs & relics",
+      "Numbered colour parallels"
+    ],
+    "Topps Series 2": [
+      "Rookie cards & short-print rookie variations",
+      "Certified autographs & relics",
+      "Numbered colour parallels"
+    ],
+    "Topps Update": [
+      "Rookie cards & short-print rookie variations",
+      "Certified autographs & relics",
+      "Numbered colour parallels",
+      "Rookie Debut cards"
+    ],
+    "Topps Chrome": [
+      "Rookie Autographs",
+      "Refractor parallels (numbered colours up to Superfractor 1/1)"
+    ],
+    "Topps Chrome Update": [
+      "Rookie Autographs",
+      "Refractor parallels (numbered colours up to Superfractor 1/1)"
+    ],
+    "Topps Chrome Black": [
+      "Rookie Autographs",
+      "Refractor parallels (numbered colours up to Superfractor 1/1)"
+    ],
+    "Topps Cosmic Chrome": [
+      "Rookie Autographs",
+      "Refractor parallels (numbered colours up to Superfractor 1/1)"
+    ],
+    "Topps Chrome Platinum Anniversary": [
+      "Rookie Autographs",
+      "Refractor parallels (numbered colours up to Superfractor 1/1)"
+    ],
+    "Topps Chrome Sonic": [
+      "Rookie Autographs",
+      "Refractor parallels (numbered colours up to Superfractor 1/1)"
+    ],
+    "Topps Stadium Club Chrome": [
+      "Rookie Autographs",
+      "Refractor parallels (numbered colours up to Superfractor 1/1)"
+    ],
+    "Topps Allen & Ginter Chrome": [
+      "Rookie Autographs",
+      "Refractor parallels (numbered colours up to Superfractor 1/1)"
+    ],
+    "Bowman": [
+      "1st Bowman Chrome Prospect Autographs",
+      "1st Bowman Chrome prospect refractors",
+      "Paper prospect parallels"
+    ],
+    "Bowman Chrome": [
+      "1st Bowman Chrome Prospect Autographs",
+      "1st Bowman Chrome prospect refractors",
+      "Rookie Autographs"
+    ],
+    "Bowman Draft": [
+      "1st Bowman Chrome Draft Autographs",
+      "Chrome Draft refractors"
+    ],
+    "Bowman's Best": [
+      "Prospect & rookie autographs",
+      "Refractor parallels"
+    ],
+    "Bowman Sterling": [
+      "On-card prospect autographs"
+    ],
+    "Bowman Inception": [
+      "On-card prospect autographs"
+    ],
+    "Topps Heritage": [
+      "Real One autographs",
+      "Short-print base & action variations",
+      "Chrome parallels"
+    ],
+    "Topps Heritage High Number": [
+      "Real One autographs",
+      "Short-print variations",
+      "Chrome parallels"
+    ],
+    "Topps Stadium Club": [
+      "Autographs",
+      "Numbered foil parallels"
+    ],
+    "Topps Allen & Ginter": [
+      "Framed mini autographs & relics",
+      "Rip cards"
+    ],
+    "Topps Gypsy Queen": [
+      "Autographs",
+      "Mini parallels"
+    ],
+    "Topps Finest": [
+      "Rookie & Finest autographs",
+      "Refractor parallels"
+    ],
+    "Topps Archives": [
+      "Fan Favorites autographs",
+      "Retro-design parallels"
+    ],
+    "Topps Archives Signature Series": [
+      "One certified buyback autograph per box"
+    ],
+    "Topps Pro Debut": [
+      "Minor-league prospect autographs"
+    ],
+    "Topps Opening Day": [
+      "Rookie cards",
+      "Insert parallels"
+    ],
+    "Topps Big League": [
+      "Rookie cards",
+      "Autographs & parallels"
+    ],
+    "Topps Holiday": [
+      "Rookie cards",
+      "Holiday-themed parallels"
+    ],
+    "Topps Five Star": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Tribute": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Museum Collection": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Dynasty": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Tier One": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Triple Threads": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Definitive": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Transcendent": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Sterling": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Inception": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Clearly Authentic": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Luminaries": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Gold Label": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Gilded Collection": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Pristine": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ],
+    "Topps Diamond Icons": [
+      "On-card autographs",
+      "Low-numbered parallels & relics"
+    ]
+  }
+}

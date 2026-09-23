@@ -18,18 +18,19 @@
 </head>
 <body>
 <div class="wrap">
-  <header class="site">
-    <a class="home brand" href="/">Hockey Card <span>Sales</span></a>
-    <div class="sub">Upper Deck NHL hobby &amp; blaster box prices in Canada</div>
+  <header>
+    <a class="brand" href="/">Hockey Card <span>Sales</span></a>
+    <nav class="sports" aria-label="Sport">{{NAV}}</nav>
   </header>
+  <p class="sub tagline">{{TAGLINE}}</p>
 
-  <nav class="crumbs"><a href="/">All boxes</a> › {{SEASON}} › {{TITLE}}</nav>
+  <nav class="crumbs"><a href="{{SPORT_BASE}}">All {{SPORT}} boxes</a> › {{SEASON}} › {{TITLE}}</nav>
 
   <div class="prod-head">
     {{IMG_TAG}}
     <div>
       <h1>{{TITLE}}</h1>
-      <div class="meta"><span class="pill hobby">{{BOX_TYPE}} box</span><span class="pill">{{SEASON}} season</span> {{SALE}}</div>
+      <div class="meta"><span class="pill hobby">{{BOX_TYPE}}</span><span class="pill">{{SEASON}} {{SEASON_WORD}}</span> {{SALE}}</div>
       <div class="prod-best">{{BEST}}</div>
       <div class="sub">{{BEST_NOTE}}</div>
     </div>

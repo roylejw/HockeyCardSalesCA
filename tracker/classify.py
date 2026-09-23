@@ -43,6 +43,8 @@ LINES = [
 ]
 UD_BRAND = re.compile(r"upper deck|\bud\b|" + "|".join(p for p, _ in LINES[:4]))
 
+HOCKEY_EXCLUDE_RETAIL = re.compile(r"\bmega\b|\bvalue\b")  # baseball tracks these, hockey doesn't
+
 # Non-NHL leagues / international products the user doesn't want.
 EXCLUDE_LEAGUE = re.compile(
     r"\b(ahl|pwhl|chl|ohl|whl|qmjhl|ncaa|collegiate|team canada|hockey canada|juniors?|"
@@ -53,7 +55,7 @@ EXCLUDE_FORMAT = re.compile(
     r"\bcase\b|\b\d+\s*-?\s*box(es)?\b|\bbreak\b|\bspot\b|random (team|player)|"
     r"acrylic|holder|display|protector|storage|binder|sleeve|toploader|empty|\bsingle\b|"
     r"\bhobby packs?\b|\bblaster pack\b|\bpack only\b|\blot of\b|\bbooster\b|gravity feed|"
-    r"\bmega\b(?!\s+tins?\b)|\bhanger\b|\bvalue\b|\bstarter\b|\bmini tin\b"
+    r"\bhanger\b|\bstarter\b|\bmini tin\b|\bfat pack\b|\bretail box\b|\bmonster box\b"
 )
 SEASON_FULL = re.compile(r"\b(20\d\d)\s*[-/]\s*(20)?(\d\d)\b")
 SEASON_SHORT = re.compile(r"\b(\d\d)\s*[-/]\s*(\d\d)\b")
@@ -66,13 +68,17 @@ def normalise(text):
 
 
 def box_type_of(t, sport):
-    """Tin / Blaster / Hobby, plus baseball's Jumbo and Breaker's Delight hobby variants, which
-    sell at very different prices and so must not be compared with a regular hobby box."""
+    """Tin / Blaster / Hobby, plus baseball's Mega and Value retail boxes and its Jumbo and Breaker's
+    Delight hobby variants, which sell at very different prices from a regular hobby box."""
     if re.search(r"\btins?\b", t):
         return "Tin"
     if "blaster" in t:
         return "Blaster"
     if sport == "baseball":
+        if re.search(r"\bmega\b", t):
+            return "Mega"
+        if re.search(r"\bvalue\b", t):
+            return "Value"
         if re.search(r"breaker'?s delight", t):
             return "Breaker's Delight"
         if "jumbo" in t:
@@ -115,7 +121,7 @@ def classify_hockey(t):
         return None
     if not UD_BRAND.search(t):
         return None
-    if EXCLUDE_LEAGUE.search(t) or EXCLUDE_FORMAT.search(t):
+    if EXCLUDE_LEAGUE.search(t) or EXCLUDE_FORMAT.search(t) or HOCKEY_EXCLUDE_RETAIL.search(t):
         return None
     box_type = box_type_of(t, "hockey")
     if not box_type:
@@ -189,6 +195,7 @@ BASEBALL_LINES = [
     (r"\bjapan\b", "Topps Japan Edition"),
 ]
 # Lines that only exist for baseball, so a title without the word "baseball" is still safe.
+BASEBALL_EDITIONS = [(r"celebration", "Celebration"), (r"all[\s-]star game", "All-Star Game")]
 BASEBALL_ONLY = {"Topps Series 1", "Topps Series 2", "Topps Update", "Topps Heritage", "Topps Heritage High Number",
                  "Topps Allen & Ginter", "Topps Gypsy Queen", "Bowman", "Bowman Chrome", "Bowman Draft",
                  "Topps Stadium Club", "Topps Archives"}
@@ -229,6 +236,9 @@ def classify_baseball(t):
             return None
     if not re.search(r"\bbaseball\b|\bmlb\b", t) and line not in BASEBALL_ONLY:
         return None  # e.g. "Topps Chrome Hobby Box" could be any sport
+    for pat, edition in BASEBALL_EDITIONS:
+        if re.search(pat, t):
+            line = f"{line} {edition}"
     return {
         "sport": "baseball", "season": year, "line": line, "box_type": box_type,
         "key": f"{year}|{line}|{box_type}", "name": f"{year} {line}",

@@ -38,17 +38,17 @@ SPORTS = {
     },
     "baseball": {
         "label": "Baseball", "base": "/baseball/", "hits_file": "hits_baseball.json", "brand": "Topps",
-        "page_title": "Baseball Card Sales – Topps &amp; Bowman Hobby, Blaster &amp; Tin Prices in Canada",
-        "meta_desc": "Compare prices on Topps and Bowman baseball hobby boxes, blasters and tins at Canadian card "
-                     "shops. Twice-daily price checks, sale alerts, and the top rookies and prospects in every box.",
-        "tagline": "Topps &amp; Bowman MLB hobby boxes, blasters &amp; tins at Canadian stores · 2020 onward · prices in CAD",
+        "page_title": "Baseball Card Sales – Topps &amp; Bowman Hobby, Blaster, Mega &amp; Value Box Prices in Canada",
+        "meta_desc": "Compare prices on Topps and Bowman baseball hobby, blaster, mega and value boxes and tins at "
+                     "Canadian card shops. Twice-daily price checks, sale alerts, and the top rookies and prospects in every box.",
+        "tagline": "Topps &amp; Bowman MLB hobby, blaster, mega &amp; value boxes and tins at Canadian stores · 2020 onward · prices in CAD",
         "search_hint": "Search e.g. Bowman Chrome, Series 1, Skenes…",
         "season_all": "All years", "season_word": "year",
         "rookies_label": "Key rookies / prospects", "rookies_short": "Top rookies",
     },
 }
 BOX_LABELS = {"Hobby": "Hobby Box", "Jumbo": "Hobby Jumbo Box", "Breaker's Delight": "Breaker's Delight Box",
-              "Blaster": "Blaster Box", "Tin": "Tin"}
+              "Blaster": "Blaster Box", "Mega": "Mega Box", "Value": "Value Box", "Tin": "Tin"}
 BOX_GROUPS = {"Jumbo": "Hobby", "Breaker's Delight": "Hobby"}  # these show under the "Hobby" filter
 
 

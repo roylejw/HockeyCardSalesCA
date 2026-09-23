@@ -6,8 +6,9 @@ Tracks hobby box, blaster and tin prices at Canadian retailers, flags sales, and
 hits / rookies for each product:
 
 - **Hockey** (site root): Upper Deck NHL products, every season.
-- **Baseball** (`/baseball/`): Topps and Bowman MLB products from 2020 on. Jumbo and Breaker's
-  Delight hobby boxes are tracked as their own box types so they aren't compared with regular hobby boxes.
+- **Baseball** (`/baseball/`): Topps and Bowman MLB products from 2020 on, including mega and value
+  boxes. Jumbo and Breaker's Delight hobby boxes, and special editions like Celebration mega boxes, are
+  tracked separately so they aren't compared with the regular version.
 
 **Hockey excludes:** AHL, PWHL, CHL/junior leagues, NCAA, Team Canada / Hockey Canada, Olympic
 and other international products, and cases, packs, tins, breaks and accessories.

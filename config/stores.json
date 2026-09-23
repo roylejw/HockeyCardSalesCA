@@ -11,6 +11,19 @@
     {"name": "Breakaway Sports Cards", "platform": "woocommerce", "domain": "breakawaysc.com", "search": ["hockey", "baseball"], "province": "", "enabled": true},
     {"name": "Stakk", "platform": "woocommerce", "domain": "stakk.ca", "search": ["hockey"], "province": "QC", "enabled": true},
     {"name": "Out of the Box Cards", "platform": "woocommerce", "domain": "www.outoftheboxcards.com", "search": ["hockey", "baseball"], "province": "", "enabled": true, "delay": 60},
-    {"name": "Zephyr Epic", "platform": "woocommerce", "domain": "zephyrepic.com", "search": ["hockey", "baseball"], "province": "", "enabled": true}
+    {"name": "Zephyr Epic", "platform": "woocommerce", "domain": "zephyrepic.com", "search": ["hockey", "baseball"], "province": "", "enabled": true},
+    {"name": "Rémi Card Trader", "platform": "shopify", "domain": "remicardtrader.ca", "collections": ["hockey", "baseball"], "province": "QC", "enabled": true},
+    {"name": "Collector's Avenue", "platform": "shopify", "domain": "collectorsavenue.com", "collections": ["hockey", "baseball"], "province": "QC", "enabled": true},
+    {"name": "Total Sports Cards", "platform": "shopify", "domain": "totalsportcards.com", "collections": ["all"], "province": "", "enabled": true},
+    {"name": "King Card", "platform": "shopify", "domain": "kingcard.ca", "collections": ["all"], "province": "", "enabled": true},
+    {"name": "Maple Leaf Sports", "platform": "shopify", "domain": "mapleleafsports.ca", "collections": ["all"], "province": "", "enabled": true},
+    {"name": "Pastime Sports & Games", "platform": "shopify", "domain": "pastimesports.ca", "collections": ["manufacturer_upper-deck", "manufacturer_topps", "manufacturer_bowman"], "province": "BC", "enabled": true},
+    {"name": "Untouchables", "platform": "shopify", "domain": "untouchables.ca", "collections": ["sealed-hockey", "sealed-baseball"], "province": "", "enabled": true},
+    {"name": "Mint Ink", "platform": "shopify", "domain": "www.mintink.ca", "collections": ["hockey-card-boxes", "hockey-tins", "baseball-card-boxes", "baseball-tins"], "province": "", "enabled": true},
+    {"name": "Eastridge Sports Cards", "platform": "shopify", "domain": "www.ersportscards.ca", "collections": ["sealed-hockey-products", "sealed-baseball"], "province": "AB", "enabled": true},
+    {"name": "Canadiens Boutique", "platform": "shopify", "domain": "canadiensboutique.com", "collections": ["upper-deck-hockey-cards"], "province": "QC", "enabled": true},
+    {"name": "La Pioche", "platform": "shopify", "domain": "boutiquelapioche.com", "collections": ["cartes-de-hockey"], "province": "QC", "enabled": true},
+    {"name": "Zone Collection", "platform": "shopify", "domain": "www.zonecollection.ca", "collections": ["all"], "province": "QC", "enabled": true},
+    {"name": "Rednails 2", "platform": "woocommerce", "domain": "www.rednails2.com", "search": ["hockey", "baseball"], "province": "ON", "enabled": true}
   ]
 }

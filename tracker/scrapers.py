@@ -1,6 +1,7 @@
 """Store adapters. Each yields raw listings: {title, url, price, regular, in_stock, image}.
 Prices are CAD floats; `regular` is the store's own "was" price when it shows one."""
 import html
+import re
 import time
 
 import requests
@@ -8,6 +9,9 @@ import requests
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) HockeyCardSalesBot/1.0 (+https://hockeycardsales.app)"}
 DELAY = 1.5  # default seconds between requests to the same store; stores.json can override
 MAX_PAGES = 40
+# Variant options that sell part of a box, or several boxes, rather than one box (English and French).
+NOT_A_BOX_VARIANT = re.compile(
+    r"\b(packs?|paquets?|cases?|caisses?|inner|display|demi|half|singles?|bo[iî]tes? \d+|\d+ ?(box|boxes|bo[iî]tes))\b", re.I)
 
 
 def _get(url, params):
@@ -28,6 +32,8 @@ def shopify(store):
             for p in products:
                 img = (p.get("images") or [{}])[0].get("src")
                 for v in p.get("variants", []):
+                    if NOT_A_BOX_VARIANT.search(v.get("title") or ""):
+                        continue  # e.g. a "Pack" or "Inner Case" option on a hobby box listing
                     title = p["title"]
                     if v.get("title") and v["title"] != "Default Title":
                         title = f"{title} - {v['title']}"

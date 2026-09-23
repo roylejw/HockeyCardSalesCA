@@ -18,7 +18,7 @@ LINES = [
     (r"sp authentic", "SP Authentic"),
     (r"sp game used", "SP Game Used"),
     (r"\bspx\b", "SPx"),
-    (r"artifacts", "Artifacts"),
+    (r"artifacts?\b", "Artifacts"),
     (r"black diamond", "Black Diamond"),
     (r"\bthe cup\b", "The Cup"),
     (r"trilogy", "Trilogy"),
@@ -55,7 +55,7 @@ EXCLUDE_FORMAT = re.compile(
     r"\bcase\b|\b\d+\s*-?\s*box(es)?\b|\bbreak\b|\bspot\b|random (team|player)|"
     r"acrylic|holder|display|protector|storage|binder|sleeve|toploader|empty|\bsingle\b|"
     r"\bhobby packs?\b|\bblaster pack\b|\bpack only\b|\blot of\b|\bbooster\b|gravity feed|"
-    r"\bhanger\b|\bstarter\b|\bmini tin\b|\bfat pack\b|\bretail box\b|\bmonster box\b"
+    r"\bhanger\b|\bstarter\b|\bmini tin\b|\bfat pack\b|\bretail box\b|\bmonster box\b|\bpaquets?\b"
 )
 SEASON_FULL = re.compile(r"\b(20\d\d)\s*[-/]\s*(20)?(\d\d)\b")
 SEASON_SHORT = re.compile(r"\b(\d\d)\s*[-/]\s*(\d\d)\b")
@@ -72,6 +72,8 @@ def box_type_of(t, sport):
     Delight hobby variants, which sell at very different prices from a regular hobby box."""
     if re.search(r"\btins?\b", t):
         return "Tin"
+    if re.search(r"\bpacks?\b", t) and not re.search(r"\bbox|\bblaster\b", t):
+        return None  # a single pack, e.g. "Jumbo Pack"
     if "blaster" in t:
         return "Blaster"
     if sport == "baseball":
@@ -195,7 +197,8 @@ BASEBALL_LINES = [
     (r"\bjapan\b", "Topps Japan Edition"),
 ]
 # Lines that only exist for baseball, so a title without the word "baseball" is still safe.
-BASEBALL_EDITIONS = [(r"celebration", "Celebration"), (r"all[\s-]star game", "All-Star Game")]
+BASEBALL_EDITIONS = [(r"celebration", "Celebration"), (r"all[\s-]star game", "All-Star Game"),
+                     (r"\blite\b", "Lite"), (r"\bvending\b", "Vending"), (r"\b(1st|first) edition\b", "1st Edition")]
 BASEBALL_ONLY = {"Topps Series 1", "Topps Series 2", "Topps Update", "Topps Heritage", "Topps Heritage High Number",
                  "Topps Allen & Ginter", "Topps Gypsy Queen", "Bowman", "Bowman Chrome", "Bowman Draft",
                  "Topps Stadium Club", "Topps Archives"}

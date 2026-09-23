@@ -25,6 +25,8 @@ class ClassifyTest(unittest.TestCase):
             "Upper Deck 2026 Series 2 Hockey Tin": "2025-26|Series 2|Tin",
             "Upper Deck 2025 Series 1 Hockey Hobby Box": "2025-26|Series 1|Hobby",
             "Upper Deck 2025-26 Series Two Hockey Blaster Collectible Hockey Cards": "2025-26|Series 2|Blaster",
+            "2023-24 Hockey - Upper Deck Extended - Boîte - Hobby (anglais)": "2023-24|Extended Series|Hobby",
+            "NHL 2025-2026 Upper Deck Artifact Hockey Blaster Trading Cards": "2025-26|Artifacts|Blaster",
         }
         for title, key in cases.items():
             self.assertEqual(self.key(title), key, title)
@@ -46,6 +48,7 @@ class ClassifyTest(unittest.TestCase):
             "Upper Deck 2025-2026 Series 1 Hockey Cards - Gravity Feed",
             "Upper Deck 2026 Team Canada Hockey Blaster Box",
             "2025-26 Upper Deck Series 1 Hockey Mega Box",
+            "2022-23 Hockey - Upper Deck Series 2 - Paquet - Hobby",
         ]:
             self.assertIsNone(classify(title), title)
 
@@ -71,6 +74,9 @@ class ClassifyTest(unittest.TestCase):
             "2024 Topps Bowman Baseball Value Box": "2024|Bowman|Value",
             "2026 Topps Series 1 Baseball Celebration Mega Box": "2026|Topps Series 1 Celebration|Mega",
             "2026 Topps Series 2 Baseball All Star Game Mega Box": "2026|Topps Series 2 All-Star Game|Mega",
+            "2021 Topps Bowman Chrome Baseball Hobby Lite Box": "2021|Bowman Chrome Lite|Hobby",
+            "2021 Bowman Draft Baseball First Edition Hobby Box": "2021|Bowman Draft 1st Edition|Hobby",
+            "2022 Topps Series 2/Two MLB Baseball Vending Hobby Box": "2022|Topps Series 2 Vending|Hobby",
             "2023 Topps Allen &#038; Ginter Baseball Hobby Box": "2023|Topps Allen & Ginter|Hobby",
             "2021 Topps Archive Baseball Hobby Box": "2021|Topps Archives|Hobby",
         }
@@ -83,6 +89,8 @@ class ClassifyTest(unittest.TestCase):
             "2019 Topps Series 1 Baseball Hobby Box",           # before 2020
             "2026 Panini Prizm Baseball Hobby Box",              # not Topps
             "2025 Topps Series 1 Baseball Hanger Box",
+            "2021 Topps Update Series Baseball Jumbo Pack",
+            "2023 Bowman Baseball Hobby Jumbo Pack",
             "2025 Topps Series 1 Baseball Fat Pack",
             "2025 Topps Update Baseball Retail Box",
             "2024 Topps Chrome Football Hobby Box",

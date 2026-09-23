@@ -121,3 +121,5 @@ details.hits[open] summary::before { content: "▾ "; }
 .browse a { color: var(--accent); text-decoration: none; }
 .brand { font-size: 24px; font-weight: 700; letter-spacing: -.01em; color: var(--ink) !important; }
 .brand span { color: var(--accent); }
+.page-h1 { font-size: 22px; margin: 14px 0 4px; letter-spacing: -.01em; }
+.tagline a { color: var(--accent); }

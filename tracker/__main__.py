@@ -28,9 +28,14 @@ SITE_URL = "https://hockeycardsales.app"
 SPORTS = {
     "hockey": {
         "label": "Hockey", "base": "/", "hits_file": "hits.json", "brand": "Upper Deck",
-        "page_title": "Hockey Card Sales – Upper Deck NHL Hobby, Blaster &amp; Tin Prices in Canada",
-        "meta_desc": "Compare prices on Upper Deck NHL hobby boxes, blasters and tins at Canadian card shops. "
-                     "Twice-daily price checks, sale alerts, and the top Young Guns in every box.",
+        # The home page: Google shows this for the whole site, so it mentions both sports.
+        "page_title": "Hockey Card Sales – Hockey &amp; Baseball Card Box Prices in Canada",
+        "meta_desc": "Compare hockey and baseball card box prices at {stores} Canadian card shops: Upper Deck NHL "
+                     "and Topps &amp; Bowman MLB hobby boxes, blasters, megas and tins. Twice-daily price checks, "
+                     "sale alerts, and the top Young Guns and rookies in every box.",
+        "h1": "Hockey card box prices in Canada",
+        "intro": "Upper Deck NHL hobby boxes, blasters &amp; tins from {stores} Canadian card shops, checked twice a day. "
+                 'Prices in CAD. Collecting baseball too? <a href="/baseball/">Compare Topps &amp; Bowman baseball card box prices</a>.',
         "tagline": "Upper Deck NHL hobby boxes, blasters &amp; tins at Canadian stores · prices in CAD",
         "search_hint": "Search e.g. Series 1, SP Authentic, Demidov…",
         "season_all": "All seasons", "season_word": "season",
@@ -38,10 +43,13 @@ SPORTS = {
     },
     "baseball": {
         "label": "Baseball", "base": "/baseball/", "hits_file": "hits_baseball.json", "brand": "Topps",
-        "page_title": "Baseball Card Sales – Topps &amp; Bowman Hobby, Blaster, Mega &amp; Value Box Prices in Canada",
-        "meta_desc": "Compare prices on Topps and Bowman baseball hobby, blaster, mega and value boxes and tins at "
-                     "Canadian card shops. Twice-daily price checks, sale alerts, and the top rookies and prospects in every box.",
+        "page_title": "Baseball Card Box Prices in Canada – Topps &amp; Bowman Hobby, Blaster &amp; Mega | Hockey Card Sales",
+        "meta_desc": "Compare baseball card box prices at {stores} Canadian card shops: Topps and Bowman hobby, jumbo, "
+                     "blaster, mega and value boxes and tins, 2020 onward. Twice-daily price checks, sale alerts, and the top rookies and prospects in every box.",
         "tagline": "Topps &amp; Bowman MLB hobby, blaster, mega &amp; value boxes and tins at Canadian stores · 2020 onward · prices in CAD",
+        "h1": "Baseball card box prices in Canada",
+        "intro": "Topps &amp; Bowman MLB hobby, jumbo, blaster, mega &amp; value boxes and tins from {stores} Canadian card shops, "
+                 '2020 onward, checked twice a day. Prices in CAD. Also see <a href="/">hockey card box prices</a>.',
         "search_hint": "Search e.g. Bowman Chrome, Series 1, Skenes…",
         "season_all": "All years", "season_word": "year",
         "rookies_label": "Key rookies / prospects", "rookies_short": "Top rookies",
@@ -189,6 +197,7 @@ def build():
     shutil.copy(ROOT / "web" / "style.css", site / "style.css")
     template = (ROOT / "web" / "template.html").read_text()
 
+    all_stores = {l["store"] for ps in products.values() for p in ps for l in p["listings"]}
     for sport, cfg in SPORTS.items():
         out = products[sport]
         per_store = {}
@@ -203,8 +212,12 @@ def build():
         folder = site / cfg["base"].strip("/") if cfg["base"] != "/" else site
         folder.mkdir(parents=True, exist_ok=True)
         (folder / "data.json").write_text(json.dumps(data))
+        n_stores = str(len(per_store))
         fill = {
-            "PAGE_TITLE": cfg["page_title"], "META_DESC": cfg["meta_desc"], "TAGLINE": cfg["tagline"],
+            "PAGE_TITLE": cfg["page_title"],
+            # the home page's description covers both sports, so it counts every store
+            "META_DESC": cfg["meta_desc"].replace("{stores}", str(len(all_stores)) if cfg["base"] == "/" else n_stores),
+            "H1": cfg["h1"], "INTRO": cfg["intro"].replace("{stores}", n_stores),
             "CANONICAL": SITE_URL + cfg["base"], "SEARCH_HINT": cfg["search_hint"], "NAV": nav_html(sport),
             "BROWSE": browse_html(out),
         }

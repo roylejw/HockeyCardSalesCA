@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hockey Card Sales – Upper Deck NHL Hobby &amp; Blaster Box Prices in Canada</title>
-<meta name="description" content="Compare prices on Upper Deck NHL hobby and blaster boxes at Canadian card shops. Daily price checks, sale alerts, and the top Young Guns in every box.">
+<meta name="description" content="Compare prices on Upper Deck NHL hobby and blaster boxes at Canadian card shops. Twice-daily price checks, sale alerts, and the top Young Guns in every box.">
 <link rel="canonical" href="https://hockeycardsales.app/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Hockey Card Sales">
@@ -50,7 +50,7 @@
 
   <h2>Stores checked</h2>
   <div class="stores" id="stores"></div>
-  <p class="sub" style="margin-top:28px;font-size:12.5px">Prices are checked once a day and may have changed since — always confirm on the store's site.
+  <p class="sub" style="margin-top:28px;font-size:12.5px">Prices are checked twice a day and may have changed since — always confirm on the store's site.
     Not affiliated with Upper Deck, the NHL, or any retailer listed. Top-hit lists are curated and may be incomplete.</p>
 </div>
 
@@ -65,7 +65,7 @@ let shown = PAGE;
 const state = { q: "", type: "", season: "", store: "", sort: "season", sale: false, stock: true };
 
 function init() {
-  $("#updated").textContent = "updated " + new Date(DATA.generated).toLocaleString();
+  $("#updated").textContent = "prices checked " + new Date(DATA.checked).toLocaleString([], { dateStyle: "medium", timeStyle: "short" });
   const seasons = [...new Set(DATA.products.map(p => p.season))].sort().reverse();
   $("#season").innerHTML = `<option value="">All seasons</option>` +
     seasons.map(s => `<option>${s}</option>`).join("");

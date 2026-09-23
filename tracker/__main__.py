@@ -144,7 +144,8 @@ def build():
         })
     out.sort(key=lambda p: (p["season"], p["line"]), reverse=True)
 
-    data = {"generated": now(), "products": out, "runs": runs}
+    checked = runs[0]["ts"] if runs else now()  # when prices were last scraped, not when the page was built
+    data = {"generated": now(), "checked": checked, "products": out, "runs": runs}
     site = ROOT / "site"
     if site.exists():
         shutil.rmtree(site)
@@ -155,8 +156,8 @@ def build():
     payload = json.dumps(data).replace("</", "<\\/")
     page = page.replace("/*__DATA__*/null", payload).replace("<!--__BROWSE__-->", browse_html(out))
     (site / "index.html").write_text(page)
-    write_product_pages(site, out, data["generated"])
-    write_sitemap(site, out, data["generated"])
+    write_product_pages(site, out, checked)
+    write_sitemap(site, out, checked)
     print(f"Built site/index.html — {len(out)} products, "
           f"{sum(p['on_sale'] for p in out)} with sales")
 

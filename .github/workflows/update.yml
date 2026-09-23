@@ -3,8 +3,11 @@
 name: Update prices
 
 on:
+  # Off the top of the hour: GitHub delays or drops :00 jobs when busy.
+  # The evening run is a backup in case the morning one is skipped.
   schedule:
-    - cron: "0 12 * * *"   # 12:00 UTC = 8am Eastern (7am in winter)
+    - cron: "23 11 * * *"   # 11:23 UTC = 6:23am Central (5:23am in winter)
+    - cron: "23 23 * * *"   # 23:23 UTC = 6:23pm Central (5:23pm in winter)
   workflow_dispatch:        # "Run workflow" button on the Actions tab
   push:
     branches: [main]

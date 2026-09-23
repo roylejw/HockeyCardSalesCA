@@ -18,7 +18,7 @@
 <div class="wrap">
   <header>
     <h1>Hockey Card <span>Sales</span></h1>
-    <div class="sub">Upper Deck NHL hobby &amp; blaster boxes at Canadian stores · prices in CAD · <span id="updated"></span></div>
+    <div class="sub">Upper Deck NHL hobby &amp; blaster boxes at Canadian stores · prices in CAD</div>
   </header>
 
   <h2 id="dealsHead">Best deals right now</h2>
@@ -50,7 +50,7 @@
 
   <h2>Stores checked</h2>
   <div class="stores" id="stores"></div>
-  <p class="sub" style="margin-top:28px;font-size:12.5px">Prices are checked twice a day and may have changed since — always confirm on the store's site.
+  <p class="sub" style="margin-top:28px;font-size:12.5px"><span id="updated"></span><br>Prices are checked twice a day and may have changed since — always confirm on the store's site.
     Not affiliated with Upper Deck, the NHL, or any retailer listed. Top-hit lists are curated and may be incomplete.</p>
 </div>
 
@@ -65,7 +65,7 @@ let shown = PAGE;
 const state = { q: "", type: "", season: "", store: "", sort: "season", sale: false, stock: true };
 
 function init() {
-  $("#updated").textContent = "prices checked " + new Date(DATA.checked).toLocaleString([], { dateStyle: "medium", timeStyle: "short" });
+  $("#updated").textContent = "Prices last checked " + new Date(DATA.checked).toLocaleString([], { dateStyle: "medium", timeStyle: "short" });
   const seasons = [...new Set(DATA.products.map(p => p.season))].sort().reverse();
   $("#season").innerHTML = `<option value="">All seasons</option>` +
     seasons.map(s => `<option>${s}</option>`).join("");

@@ -38,6 +38,8 @@
       <option value="low">Price: low → high</option>
       <option value="high">Price: high → low</option>
     </select>
+    <label class="price-filter"><span id="priceLabel">Max price: Any</span>
+      <input type="range" id="price" min="0" value="0" aria-label="Maximum price"></label>
     <label class="chk"><input type="checkbox" id="sale"> On sale</label>
     <label class="chk"><input type="checkbox" id="stock" checked> In stock</label>
     <span class="count" id="count"></span>
@@ -62,7 +64,9 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;
 const PAGE = 60;
 let shown = PAGE;
 
-const state = { q: "", type: "", season: "", store: "", sort: "season", sale: false, stock: true };
+const state = { q: "", type: "", season: "", store: "", sort: "season", sale: false, stock: true, maxPrice: Infinity };
+// Slider stops: most boxes cost under $300 but some cost thousands, so an evenly spaced slider would be useless.
+const PRICE_STEPS = [25, 50, 75, 100, 125, 150, 200, 250, 300, 400, 500, 750, 1000, 1500, 2000, 3000, 5000];
 
 function init() {
   $("#updated").textContent = "Prices last checked " + new Date(DATA.checked).toLocaleString([], { dateStyle: "medium", timeStyle: "short" });
@@ -86,6 +90,19 @@ function init() {
   for (const id of ["sale", "stock"]) $("#" + id).addEventListener("change", e => { state[id] = e.target.checked; reset(); });
   $("#loadmore").addEventListener("click", () => { shown += PAGE; render(); });
 
+  // Only offer stops below the most expensive box, then "Any" as the last (default) position.
+  const top = Math.max(...DATA.products.flatMap(p => p.listings.map(l => l.price)));
+  const stops = [...PRICE_STEPS.filter(v => v < top), Infinity];
+  const slider = $("#price");
+  slider.max = stops.length - 1;
+  slider.value = stops.length - 1;
+  slider.addEventListener("input", () => {
+    state.maxPrice = stops[slider.value];
+    $("#priceLabel").textContent = state.maxPrice === Infinity ? "Max price: Any" : `Max price: $${state.maxPrice.toLocaleString()}`;
+    renderDeals();
+    reset();
+  });
+
   renderDeals();
   renderStores();
   render();
@@ -104,6 +121,7 @@ function filtered() {
     if (state.season && p.season !== state.season) return false;
     const ls = visibleListings(p);
     if (!ls.length) return false;
+    if (Math.min(...ls.map(l => l.price)) > state.maxPrice) return false;
     if (state.sale && !ls.some(l => l.on_sale)) return false;
     if (q) {
       const hay = (p.name + " " + p.box_type + " " + p.hits.young_guns.join(" ") + " " +
@@ -197,13 +215,13 @@ function render() {
 }
 
 function renderDeals() {
-  const deals = DATA.products.flatMap(p => p.listings.filter(l => l.on_sale).map(l => ({ p, l })))
+  const deals = DATA.products.flatMap(p => p.listings.filter(l => l.on_sale && l.price <= state.maxPrice).map(l => ({ p, l })))
     .sort((a, b) => b.p.season.localeCompare(a.p.season) || b.l.sale_pct - a.l.sale_pct);
   // Favour recent seasons: top 12 among the three newest seasons that have deals, then fill with anything.
   const seasons = [...new Set(deals.map(d => d.p.season))].slice(0, 3);
   const recent = deals.filter(d => seasons.includes(d.p.season)).sort((a, b) => b.l.sale_pct - a.l.sale_pct);
   const top = recent.slice(0, 12);
-  if (!top.length) { $("#dealsHead").hidden = true; return; }
+  $("#dealsHead").hidden = $("#deals").hidden = !top.length;
   $("#deals").innerHTML = top.map(({ p, l }) => `<a class="deal" href="${esc(l.url)}" target="_blank" rel="noopener">
       <div class="n">${esc(p.name)} <span class="pill">${esc(p.box_type)}</span></div>
       <div class="p">${money(l.price)} ${l.regular ? `<s class="sub" style="font-size:13px;font-weight:400">${money(l.regular)}</s>` : ""}</div>

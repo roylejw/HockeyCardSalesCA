@@ -123,3 +123,7 @@ details.hits[open] summary::before { content: "▾ "; }
 .brand span { color: var(--accent); }
 .page-h1 { font-size: 22px; margin: 14px 0 4px; letter-spacing: -.01em; }
 .tagline a { color: var(--accent); }
+.price-filter { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); white-space: nowrap; }
+.price-filter span { min-width: 9.5em; font-variant-numeric: tabular-nums; }
+.price-filter input { width: 150px; accent-color: var(--accent); }
+@media (max-width: 480px) { .price-filter { flex: 1 1 100%; } .price-filter input { flex: 1; width: auto; } }

@@ -48,6 +48,7 @@ class ClassifyTest(unittest.TestCase):
             "Upper Deck 2025-2026 Series 1 Hockey Cards - Gravity Feed",
             "Upper Deck 2026 Team Canada Hockey Blaster Box",
             "2025-26 Upper Deck Series 1 Hockey Mega Box",
+            "2025-26 Upper Deck Series 1 Hockey Hanger Box",
             "2022-23 Hockey - Upper Deck Series 2 - Paquet - Hobby",
         ]:
             self.assertIsNone(classify(title), title)
@@ -71,6 +72,8 @@ class ClassifyTest(unittest.TestCase):
             "2026 Bowman Baseball Mega Box": "2026|Bowman|Mega",
             "2026 Topps Bowman Baseball Mega Box": "2026|Bowman|Mega",
             "2024 Topps Chrome Baseball Value Box": "2024|Topps Chrome|Value",
+            "2025 Topps Series 1 Baseball Hanger Box": "2025|Topps Series 1|Hanger",
+            "2026 Topps Heritage Baseball Hanger Box": "2026|Topps Heritage|Hanger",
             "2024 Topps Bowman Baseball Value Box": "2024|Bowman|Value",
             "2026 Topps Series 1 Baseball Celebration Mega Box": "2026|Topps Series 1 Celebration|Mega",
             "2026 Topps Series 2 Baseball All Star Game Mega Box": "2026|Topps Series 2 All-Star Game|Mega",
@@ -88,7 +91,6 @@ class ClassifyTest(unittest.TestCase):
         for title in [
             "2019 Topps Series 1 Baseball Hobby Box",           # before 2020
             "2026 Panini Prizm Baseball Hobby Box",              # not Topps
-            "2025 Topps Series 1 Baseball Hanger Box",
             "2021 Topps Update Series Baseball Jumbo Pack",
             "2023 Bowman Baseball Hobby Jumbo Pack",
             "2025 Topps Series 1 Baseball Fat Pack",

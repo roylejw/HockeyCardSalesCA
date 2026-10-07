@@ -43,7 +43,7 @@ LINES = [
 ]
 UD_BRAND = re.compile(r"upper deck|\bud\b|" + "|".join(p for p, _ in LINES[:4]))
 
-HOCKEY_EXCLUDE_RETAIL = re.compile(r"\bmega\b|\bvalue\b")  # baseball tracks these, hockey doesn't
+HOCKEY_EXCLUDE_RETAIL = re.compile(r"\bmega\b|\bvalue\b|\bhanger\b")  # baseball tracks these, hockey doesn't
 
 # Non-NHL leagues / international products the user doesn't want.
 EXCLUDE_LEAGUE = re.compile(
@@ -55,7 +55,7 @@ EXCLUDE_FORMAT = re.compile(
     r"\bcase\b|\b\d+\s*-?\s*box(es)?\b|\bbreak\b|\bspot\b|random (team|player)|"
     r"acrylic|holder|display|protector|storage|binder|sleeve|toploader|empty|\bsingle\b|"
     r"\bhobby packs?\b|\bblaster pack\b|\bpack only\b|\blot of\b|\bbooster\b|gravity feed|"
-    r"\bhanger\b|\bstarter\b|\bmini tin\b|\bfat pack\b|\bretail box\b|\bmonster box\b|\bpaquets?\b"
+    r"\bstarter\b|\bmini tin\b|\bfat pack\b|\bretail box\b|\bmonster box\b|\bpaquets?\b"
 )
 SEASON_FULL = re.compile(r"\b(20\d\d)\s*[-/]\s*(20)?(\d\d)\b")
 SEASON_SHORT = re.compile(r"\b(\d\d)\s*[-/]\s*(\d\d)\b")
@@ -68,7 +68,7 @@ def normalise(text):
 
 
 def box_type_of(t, sport):
-    """Tin / Blaster / Hobby, plus baseball's Mega and Value retail boxes and its Jumbo and Breaker's
+    """Tin / Blaster / Hobby, plus baseball's Mega, Value and Hanger retail boxes and its Jumbo and Breaker's
     Delight hobby variants, which sell at very different prices from a regular hobby box."""
     if re.search(r"\btins?\b", t):
         return "Tin"
@@ -81,6 +81,8 @@ def box_type_of(t, sport):
             return "Mega"
         if re.search(r"\bvalue\b", t):
             return "Value"
+        if re.search(r"\bhanger\b", t):
+            return "Hanger"
         if re.search(r"breaker'?s delight", t):
             return "Breaker's Delight"
         if "jumbo" in t:

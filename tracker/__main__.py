@@ -45,10 +45,10 @@ SPORTS = {
         "label": "Baseball", "base": "/baseball/", "hits_file": "hits_baseball.json", "brand": "Topps",
         "page_title": "Baseball Card Box Prices in Canada – Topps &amp; Bowman Hobby, Blaster &amp; Mega | Hockey Card Sales",
         "meta_desc": "Compare baseball card box prices at {stores} Canadian card shops: Topps and Bowman hobby, jumbo, "
-                     "blaster, mega and value boxes and tins, 2020 onward. Twice-daily price checks, sale alerts, and the top rookies and prospects in every box.",
-        "tagline": "Topps &amp; Bowman MLB hobby, blaster, mega &amp; value boxes and tins at Canadian stores · 2020 onward · prices in CAD",
+                     "blaster, mega, value and hanger boxes and tins, 2020 onward. Twice-daily price checks, sale alerts, and the top rookies and prospects in every box.",
+        "tagline": "Topps &amp; Bowman MLB hobby, blaster, mega, value &amp; hanger boxes and tins at Canadian stores · 2020 onward · prices in CAD",
         "h1": "Baseball card box prices in Canada",
-        "intro": "Topps &amp; Bowman MLB hobby, jumbo, blaster, mega &amp; value boxes and tins from {stores} Canadian card shops, "
+        "intro": "Topps &amp; Bowman MLB hobby, jumbo, blaster, mega, value &amp; hanger boxes and tins from {stores} Canadian card shops, "
                  '2020 onward, checked twice a day. Prices in CAD. Also see <a href="/">hockey card box prices</a>.',
         "search_hint": "Search e.g. Bowman Chrome, Series 1, Skenes…",
         "season_all": "All years", "season_word": "year",
@@ -56,7 +56,7 @@ SPORTS = {
     },
 }
 BOX_LABELS = {"Hobby": "Hobby Box", "Jumbo": "Hobby Jumbo Box", "Breaker's Delight": "Breaker's Delight Box",
-              "Blaster": "Blaster Box", "Mega": "Mega Box", "Value": "Value Box", "Tin": "Tin"}
+              "Blaster": "Blaster Box", "Mega": "Mega Box", "Value": "Value Box", "Hanger": "Hanger Box", "Tin": "Tin"}
 BOX_GROUPS = {"Jumbo": "Hobby", "Breaker's Delight": "Hobby"}  # these show under the "Hobby" filter
 
 
